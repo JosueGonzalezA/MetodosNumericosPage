@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Métodos Numéricos | Bisección</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+    <header>
+        <h1>Métodos Numéricos</h1>
+        <h2>Universidad Nacional Autónoma de México</h2>
+        <img class="site-logo" src="logo unam.png" alt="Logotipo de la UNAM">
+        <h3>By: CMMP + Anexadas</h3>
+        <nav aria-label="Navegación principal">
+            <a href="inicio.html">Inicio</a>
+            <a href="biseccion.html">Bisección</a>
+            <a href="newton-raphson.html">Newton-Raphson</a>
+            <a href="secante.html">Secante</a>
+        </nav>
+    </header>
+    <main>
+<section id="biseccion">
+    <h2>Metodo de Biseccion</h2>
+
+    <p>
+        El metodo de biseccion es un metodo numerico iterativo
+        que permite encontrar una aproximacion de la raiz de una
+        funcion. Consiste en dividir repetidamente un intervalo
+        en dos partes hasta encontrar la raiz con la precision deseada.
+    </p>
+
+    <h3>Pasos para resolver el metodo de biseccion</h3>
+
+    <ol>
+        <li>
+            <strong>Definir la funcion:</strong>
+            Identificar la funcion f(x) de la cual se desea encontrar
+            una raiz, es decir, un valor de x para el que f(x) = 0.
+        </li>
+
+        <li>
+            <strong>Elegir el intervalo inicial:</strong>
+            Seleccionar dos valores, a y b, que delimiten el intervalo
+            donde se encuentra la raiz. La funcion debe ser continua
+            en el intervalo y los valores f(a) y f(b) deben tener
+            signos opuestos, es decir:
+            <p>f(a) * f(b) &lt; 0</p>
+        </li>
+
+        <li>
+            <strong>Calcular el punto medio:</strong>
+            Obtener el punto medio del intervalo utilizando la formula:
+            <p>xr = (a + b) / 2</p>
+        </li>
+
+        <li>
+            <strong>Evaluar la funcion:</strong>
+            Sustituir el valor de xr en la funcion para calcular f(xr).
+        </li>
+
+        <li>
+            <strong>Determinar el nuevo intervalo:</strong>
+            Comparar los signos de f(a) y f(xr).
+            <ul>
+                <li>
+                    Si f(a) * f(xr) &lt; 0, la raiz esta en [a, xr].
+                    Se actualiza b = xr.
+                </li>
+                <li>
+                    Si f(a) * f(xr) &gt; 0, la raiz esta en [xr, b].
+                    Se actualiza a = xr.
+                </li>
+                <li>
+                    Si f(xr) = 0, se encontro la raiz exacta y
+                    el procedimiento termina.
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <strong>Repetir el procedimiento:</strong>
+            Calcular nuevamente el punto medio con el intervalo
+            actualizado y repetir los pasos hasta alcanzar la
+            precision deseada.
+        </li>
+
+        <li>
+            <strong>Obtener la aproximacion final:</strong>
+            Cuando se cumpla el criterio de paro, el ultimo punto
+            medio calculado se toma como aproximacion de la raiz.
+        </li>
+    </ol>
+
+    <h3>Ejemplo </h3>
+
+    <p>Encontrar una raiz de la siguiente funcion:</p>
+
+    <p><strong>f(x) = x^2 - 4</strong></p>
+
+    <p>Elegimos el intervalo inicial [1, 3]. Evaluamos sus extremos:</p>
+
+    <ul>
+        <li>f(1) = 1^2 - 4 = -3</li>
+        <li>f(3) = 3^2 - 4 = 5</li>
+    </ul>
+
+    <p>
+        Como los resultados tienen signos opuestos, podemos aplicar
+        el metodo de biseccion.
+    </p>
+
+    <h4>Primera iteracion</h4>
+
+    <p>Calculamos el punto medio:</p>
+
+    <p>xr = (1 + 3) / 2 = 2</p>
+
+    <p>Evaluamos la funcion:</p>
+
+    <p>f(2) = 2^2 - 4 = 0</p>
+
+    <p>
+        <strong>Resultado:</strong> La raiz es x = 2.
+        El procedimiento termina porque encontramos un valor
+        que hace que la funcion sea igual a cero.
+    </p>
+
+    <div class="calculator">
+        <h3>Calculadora del método de bisección</h3>
+        <form id="bisection-form" novalidate>
+            <div class="calculator-fields">
+                <div>
+                    <label for="bisection-function">Función f(x)</label>
+                    <input id="bisection-function" name="function" type="text"
+                           value="" placeholder="Ejemplo: x^2 - 2" autocomplete="off" required
+                           aria-describedby="function-help">
+                    <div id="function-help" class="field-help">
+                        Escribe solo la expresión, por ejemplo <code>x^2 - 2</code>, sin <code>f(x)=</code>.
+                        La multiplicación se escribe con <code>*</code>, como <code>2*x</code>.
+                        Se admiten números, paréntesis y las operaciones <code>+</code>, <code>-</code>,
+                        <code>*</code>, <code>/</code> y <code>^</code>.
+                        Escribe las funciones con paréntesis, como <code>sin(x)</code>.
+                        Se aceptan <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>asin</code>,
+                        <code>acos</code>, <code>atan</code>, <code>exp</code>, <code>log</code>,
+                        <code>log10</code>, <code>sqrt</code>, <code>abs</code> y las constantes
+                        <code>pi</code> y <code>e</code>. Los ángulos están en radianes; <code>log(x)</code>
+                        es el logaritmo natural y <code>log10(x)</code> es base 10.
+                    </div>
+                </div>
+                <div>
+                    <label for="bisection-a">Extremo inferior a</label>
+                    <input id="bisection-a" name="a" type="number" step="any"
+                           value="1" required>
+                </div>
+                <div>
+                    <label for="bisection-b">Extremo superior b</label>
+                    <input id="bisection-b" name="b" type="number" step="any"
+                           value="2" required>
+                </div>
+                <div>
+                    <label for="bisection-criterion">Criterio de paro</label>
+                    <select id="bisection-criterion" name="criterion">
+                        <option value="absolute">Tolerancia absoluta</option>
+                        <option value="relative">Error relativo aproximado (%)</option>
+                        <option value="iterations">Número de iteraciones</option>
+                        <option value="step">Paso a paso</option>
+                    </select>
+                    <div id="criterion-help" class="field-help" aria-live="polite"></div>
+                </div>
+                <div id="absolute-tolerance-field">
+                    <label for="bisection-tolerance">Tolerancia absoluta</label>
+                    <input id="bisection-tolerance" name="tolerance" type="number"
+                           step="any" value="0.0001">
+                </div>
+                <div id="relative-tolerance-field" hidden>
+                    <label for="bisection-relative-tolerance">Error relativo aproximado máximo (%)</label>
+                    <input id="bisection-relative-tolerance" name="relativeTolerance"
+                           type="number" step="any" value="0.01">
+                </div>
+                <div id="iteration-count-field" hidden>
+                    <label for="bisection-iteration-count">Cantidad de iteraciones</label>
+                    <input id="bisection-iteration-count" name="iterationCount"
+                           type="number" step="1" min="1" max="1000" value="10">
+                </div>
+            </div>
+            <p class="continuity-note">
+                La función debe ser continua en todo el intervalo. La calculadora
+                no puede garantizar automáticamente que lo sea.
+            </p>
+            <div id="automatic-controls">
+                <button type="submit">Calcular</button>
+            </div>
+            <div id="step-controls" hidden>
+                <button id="bisection-start" type="button">Iniciar</button>
+                <button id="bisection-next" type="button" disabled>Siguiente iteración</button>
+                <button id="bisection-finish" type="button" disabled>Finalizar</button>
+            </div>
+        </form>
+        <div id="bisection-error" role="alert" hidden></div>
+        <div id="bisection-results" aria-live="polite" hidden></div>
+    </div>
+
+    <h3>Diferencia entre metodo iterativo e interactivo</h3>
+
+    <p>
+        Un metodo iterativo es un procedimiento que se repite
+        varias veces para aproximarse a una solucion. El metodo
+        de biseccion pertenece a esta categoria.
+    </p>
+
+    <p>
+        En cambio, un sistema interactivo permite que el usuario
+        introduzca datos y reciba una respuesta, como una calculadora
+        dentro de una pagina web.
+    </p>
+
+</section>
+    </main>
+    <script src="biseccion.js" defer></script>
+</body>
+</html>
