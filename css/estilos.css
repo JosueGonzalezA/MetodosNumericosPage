@@ -43,7 +43,7 @@
             color: #124f86;
         }
 
-        a.navegacion {
+        a.navegacion , .navegacion_calculadoras {
             color: var(--texto);
             text-decoration: none;
             padding: 0.5rem 1rem;
