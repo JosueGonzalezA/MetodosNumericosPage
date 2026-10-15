@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Métodos Numéricos | Bisección</title>
-    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="/css/estilos.css">
+    <link rel="stylesheet" href="/css/boton-arriba.css">
 </head>
 <body>
     <header>
         <h1>Métodos Numéricos</h1>
         <h2>Universidad Nacional Autónoma de México</h2>
-        <img class="site-logo" src="logo unam.png" alt="Logotipo de la UNAM">
+        <img class="logo_unam" src="/Imagenes/inicio/logo_unam.jpeg " alt="Logotipo de la UNAM">
         <h3>By: CMMP + Anexadas</h3>
         <nav aria-label="Navegación principal">
-            <a href="inicio.html">Inicio</a>
-            <a href="biseccion.html">Bisección</a>
-            <a href="newton-raphson.html">Newton-Raphson</a>
-            <a href="secante.html">Secante</a>
+            <a class="navegacion" href="inicio.html">Inicio</a>
+            <a class="navegacion" href="biseccion.html">Bisección</a>
+            <a class="navegacion" href="newton-raphson.html">Newton-Raphson</a>
+            <a class="navegacion" href="secante.html">Punto Fijo</a>
         </nav>
     </header>
     <main>
@@ -126,17 +127,11 @@
         que hace que la funcion sea igual a cero.
     </p>
 
-    <div class="calculator">
-        <h3>Calculadora del método de bisección</h3>
-        <form id="bisection-form" novalidate>
-            <div class="calculator-fields">
-                <div>
-                    <label for="bisection-function">Función f(x)</label>
-                    <input id="bisection-function" name="function" type="text"
-                           value="" placeholder="Ejemplo: x^2 - 2" autocomplete="off" required
-                           aria-describedby="function-help">
-                    <div id="function-help" class="field-help">
-                        Escribe solo la expresión, por ejemplo <code>x^2 - 2</code>, sin <code>f(x)=</code>.
+      <section id="biseccion_Calculadora" aria-labelledby="titulo-biseccion">
+            <h2 id="titulo-biseccion" tabindex="-1">Bisección</h2>
+            <p>Elige <code>Xi</code> y <code>Xf</code> como extremos de un intervalo donde la función tenga signos opuestos. Cada <code>Xm</code> es el punto medio. El error aproximado es <code>Ea(x) = |(Xm actual - Xm anterior) / Xm actual| × 100%</code>; no se calcula en la primera fila.</p>
+
+            <p> Escribe solo la expresión, por ejemplo <code>x^2 - 2</code>, sin <code>f(x)=</code>.
                         La multiplicación se escribe con <code>*</code>, como <code>2*x</code>.
                         Se admiten números, paréntesis y las operaciones <code>+</code>, <code>-</code>,
                         <code>*</code>, <code>/</code> y <code>^</code>.
@@ -145,61 +140,25 @@
                         <code>acos</code>, <code>atan</code>, <code>exp</code>, <code>log</code>,
                         <code>log10</code>, <code>sqrt</code>, <code>abs</code> y las constantes
                         <code>pi</code> y <code>e</code>. Los ángulos están en radianes; <code>log(x)</code>
-                        es el logaritmo natural y <code>log10(x)</code> es base 10.
-                    </div>
-                </div>
-                <div>
-                    <label for="bisection-a">Extremo inferior a</label>
-                    <input id="bisection-a" name="a" type="number" step="any"
-                           value="1" required>
-                </div>
-                <div>
-                    <label for="bisection-b">Extremo superior b</label>
-                    <input id="bisection-b" name="b" type="number" step="any"
-                           value="2" required>
-                </div>
-                <div>
-                    <label for="bisection-criterion">Criterio de paro</label>
-                    <select id="bisection-criterion" name="criterion">
-                        <option value="absolute">Tolerancia absoluta</option>
-                        <option value="relative">Error relativo aproximado (%)</option>
-                        <option value="iterations">Número de iteraciones</option>
-                        <option value="step">Paso a paso</option>
-                    </select>
-                    <div id="criterion-help" class="field-help" aria-live="polite"></div>
-                </div>
-                <div id="absolute-tolerance-field">
-                    <label for="bisection-tolerance">Tolerancia absoluta</label>
-                    <input id="bisection-tolerance" name="tolerance" type="number"
-                           step="any" value="0.0001">
-                </div>
-                <div id="relative-tolerance-field" hidden>
-                    <label for="bisection-relative-tolerance">Error relativo aproximado máximo (%)</label>
-                    <input id="bisection-relative-tolerance" name="relativeTolerance"
-                           type="number" step="any" value="0.01">
-                </div>
-                <div id="iteration-count-field" hidden>
-                    <label for="bisection-iteration-count">Cantidad de iteraciones</label>
-                    <input id="bisection-iteration-count" name="iterationCount"
-                           type="number" step="1" min="1" max="1000" value="10">
-                </div>
-            </div>
-            <p class="continuity-note">
-                La función debe ser continua en todo el intervalo. La calculadora
-                no puede garantizar automáticamente que lo sea.
-            </p>
-            <div id="automatic-controls">
-                <button type="submit">Calcular</button>
-            </div>
-            <div id="step-controls" hidden>
-                <button id="bisection-start" type="button">Iniciar</button>
-                <button id="bisection-next" type="button" disabled>Siguiente iteración</button>
-                <button id="bisection-finish" type="button" disabled>Finalizar</button>
-            </div>
+                        es el logaritmo natural y <code>log10(x)</code> es base 10. </p>
+        <form id="form-biseccion">
+            <p><label for="b-f">f(x)</label> <input id="b-f" name="funcion" value="e^(3*x) - 4" required></p>
+            <p><label for="b-a">Extremo izquierdo Xi (a)</label> <input id="b-a" name="a" type="number" step="any" value="0" required></p>
+            <p><label for="b-b">Extremo derecho Xf (b)</label> <input id="b-b" name="b" type="number" step="any" value="1" required></p>
+            <p><label for="b-tol">Error máximo Ea (%)</label> <input id="b-tol" name="tolerancia" type="number" step="any" min="0" value="1" required></p>
+            <p><label for="b-max">Iteraciones máximas</label> <input id="b-max" name="maximo" type="number" step="1" min="1" max="500" value="100" required></p>
+            <button type="submit">Calcular</button>
         </form>
-        <div id="bisection-error" role="alert" hidden></div>
-        <div id="bisection-results" aria-live="polite" hidden></div>
-    </div>
+            <div id="resultado-biseccion" aria-live="polite"></div>
+     </section>
+
+
+
+
+
+
+
+
 
     <h3>Diferencia entre metodo iterativo e interactivo</h3>
 
@@ -217,6 +176,9 @@
 
 </section>
     </main>
-    <script src="biseccion.js" defer></script>
+    <button id="btn-arriba" aria-label="Volver arriba">↑</button>
+    <script src="/scripts/boton-arriba.js" defer></script>
+    <script src="/scripts/calculadoras.js" defer></script>
+    
 </body>
 </html>

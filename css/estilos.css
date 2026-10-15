@@ -1,0 +1,163 @@
+:root {
+            color-scheme: light;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #202b3a;
+            
+            --fondoprincipal: #1f2b3b;
+            --fondosecundario: #19283f;
+            --texto: #fff;
+            --botones: #b99050;
+            --tarjetas: #283349;
+            --tarjetas-oscuras: #0e1728;
+            --borde: #3b485b;
+
+
+
+        }
+
+        body {
+            color: var(--texto);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 1rem;
+            background: var(--fondoprincipal);
+        }
+
+        header {
+            padding: 1.5rem;
+            text-align: center;
+            background: var(--fondosecundario);
+            border-radius: 0.75rem;
+            border: 1px solid var(--borde);
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.75rem 1.25rem;
+        }
+
+        a {
+            color: #124f86;
+        }
+
+        a.navegacion {
+            color: var(--texto);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.35rem;
+            background: var(--botones);
+        }
+        img {
+            width: 150px;
+            height: 100px;
+            object-fit: contain;
+        }
+        main.newton-raphson > img{
+            width: 5rem;
+            height: 5rem;
+            object-fit: contain;
+        }
+        
+
+        .history ul {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            max-width: calc((250px * 3) + (15px * 2)); 
+            gap: 1.5rem;
+            padding: 0;
+            list-style: none;
+        }
+        .history img {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+
+     
+ 
+    #inicio , #biseccion, #newton-raphson, #punto-fijo {
+    background: var(--fondoprincipal);
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+    padding: 1.5rem;
+    }
+
+
+
+    #biseccion_Calculadora {
+    background: var(--tarjetas);
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+    padding: 1.5rem;
+    }
+
+    #form-biseccion {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    align-items: start;
+    }
+
+   
+    #form-biseccion p {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 0;
+    }
+
+    #form-biseccion label {
+    font-weight: bold;
+    }
+
+    #form-biseccion input {
+    padding: 0.75rem;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    background: #fff;
+    color: #202b3a;
+    font: inherit;
+    }
+    #form-biseccion input:focus-visible {
+        outline: 3px solid var(--botones);
+    }
+
+    
+    #form-biseccion button {
+    grid-column: 1 / -1;
+    justify-self: start;
+    padding: 0.75rem 1.25rem;
+    border: none;
+    border-radius: 8px;
+    background: #14538a;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    }
+
+    #form-biseccion button:hover {
+    background: #1a69ad;
+    }
+
+
+    @media (max-width: 700px) {
+    #form-biseccion {
+        grid-template-columns: 1fr;
+    }
+    }
+
+
+
+
+    .site-logo {
+        width: 150px;
+        height: 100px;
+        object-fit: contain;
+    }
+
+

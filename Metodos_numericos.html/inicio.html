@@ -4,23 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Métodos Numéricos | Inicio</title>
-    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="/css/estilos.css">
+    <link rel="stylesheet" href="/css/boton-arriba.css">
 </head>
 <body>
     <header>
         <h1>Métodos Numéricos</h1>
         <h2>Universidad Nacional Autónoma de México</h2>
-        <img class="site-logo" src="logo unam.png" alt="Logotipo de la UNAM">
+        <img class="logo_unam" src="/Imagenes/inicio/logo_unam.jpeg " alt="Logotipo de la UNAM">
         <h3>By: CMMP + Anexadas</h3>
         <nav aria-label="Navegación principal">
-            <a href="inicio.html">Inicio</a>
-            <a href="biseccion.html">Bisección</a>
-            <a href="newton-raphson.html">Newton-Raphson</a>
-            <a href="secante.html">Secante</a>
+            <a class="navegacion" href="inicio.html">Inicio</a>
+            <a class="navegacion" href="biseccion.html">Bisección</a>
+            <a class="navegacion" href="newton-raphson.html">Newton-Raphson</a>
+            <a class="navegacion" href="secante.html">Punto Fijo</a>
         </nav>
     </header>
     <main>
-<h1 id="mision"> Mision </h1>
+        <section id="inicio">
+    <h1 id="mision"> Mision </h1>
         <p>Facilitar el aprendizaje de los métodos numéricos mediante una página web educativa que reúna apuntes, 
             ejemplos y procedimientos explicados paso a paso, para que los estudiantes comprendan y apliquen 
             métodos como el de bisección y Newton-Raphson de manera clara y práctica</p>
@@ -71,19 +73,42 @@
 
             En la actualidad, encontrar los ceros de una función es fundamental para resolver problemas científicos
              y de ingeniería, y constituye uno de los temas principales de los métodos numéricos. </p>
-             <ul>
-                <li>Matemáticas en la antigua Babilonia
-                    Alrededor de 2000-1600 a. C.</li>
-                    <img class="history-image" src="babilonia.jpg" alt="Representación de las matemáticas en la antigua Babilonia">
-                    <li>1000 a.C. Mayas y el "0"</li>
-                    <img class="history-image" src="maya.jpg" alt="Representación de los mayas">
-                    <li>250 a.C.  Arquimedes con aportaciones en las matematicas y fisica</li>
-                    <img class="history-image" src="arquimedes.jpg" alt="Arquímedes pensando">
-                    <li>1623 Johannes Kepler Maquina para realizar calculos</li>
-                    <img class="history-image" src="kepler.jpg" alt="Representación de Johannes Kepler">
-                    <li>1672 Gottfried Wilhelm Leibniz Primera calculadora </li>
-                    <img class="history-image" src="calculadora.jpg" alt="Representación de una calculadora">
-             </ul>
+             <section class="history">
+                <h2>Historia de las matemáticas</h2>
+                <ul>
+                    <li>
+                    <img src="/Imagenes/inicio/babilonia.jpg" alt="Representación de las matemáticas en la antigua Babilonia">
+                    <b>Matemáticas en la antigua Babilonia</b>
+                    <small>2000-1600 a. C.</small>
+                    </li>
+                    <li>
+                    <img src="/Imagenes/inicio/maya.jpg" alt="Representación de los mayas">
+                    <b>Los mayas y el "0"</b>
+                    <small>1000 a. C.</small>
+                    </li>
+                    <li>
+                    <img src="/Imagenes/inicio/arquimedes.jpg" alt="Arquímedes pensando">
+                    <b>Arquímedes</b>
+                    <small>250 a. C.</small>
+                    Aportaciones a las matemáticas y la física.
+                    </li>
+                    <li>
+                    <img src="/Imagenes/inicio/kepler.jpg" alt="Representación de Johannes Kepler">
+                    <b>Johannes Kepler</b>
+                    <small>1623</small>
+                    Máquina para realizar cálculos.
+                    </li>
+                    <li>
+                    <img src="/Imagenes/inicio/calculadora.jpg" alt="Representación de una calculadora">
+                    <b>Gottfried Wilhelm Leibniz</b>
+                    <small>1672</small>
+                    Primera calculadora.
+                    </li>
+                </ul>
+            </section>  
+        </section>
     </main>
+    <button id="btn-arriba" aria-label="Volver arriba">↑</button>
+    <script src="/scripts/boton-arriba.js"></script>
 </body>
 </html>
