@@ -15,9 +15,9 @@
         <h3>By: CMMP + Anexadas</h3>
         <nav aria-label="Navegación principal">
             <a class="navegacion" href="../index.html">Inicio</a>
-            <a class="navegacion" href="biseccion.html">Bisección</a>
             <a class="navegacion" href="newton-raphson.html">Newton-Raphson</a>
-            <a class="navegacion" href="secante.html">Punto Fijo</a>
+            <a class="navegacion" href="secante.html">Secante</a>
+            <a class="navegacion" href="/Metodos_numericos/calculadoras/calculadora.html">Calculadora</a>
         </nav>
     </header>
     <main>
@@ -127,30 +127,7 @@
         que hace que la funcion sea igual a cero.
     </p>
 
-      <section id="biseccion_Calculadora" aria-labelledby="titulo-biseccion">
-            <h2 id="titulo-biseccion" tabindex="-1">Bisección</h2>
-            <p>Elige <code>Xi</code> y <code>Xf</code> como extremos de un intervalo donde la función tenga signos opuestos. Cada <code>Xm</code> es el punto medio. El error aproximado es <code>Ea(x) = |(Xm actual - Xm anterior) / Xm actual| × 100%</code>; no se calcula en la primera fila.</p>
 
-            <p> Escribe solo la expresión, por ejemplo <code>x^2 - 2</code>, sin <code>f(x)=</code>.
-                        La multiplicación se escribe con <code>*</code>, como <code>2*x</code>.
-                        Se admiten números, paréntesis y las operaciones <code>+</code>, <code>-</code>,
-                        <code>*</code>, <code>/</code> y <code>^</code>.
-                        Escribe las funciones con paréntesis, como <code>sin(x)</code>.
-                        Se aceptan <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>asin</code>,
-                        <code>acos</code>, <code>atan</code>, <code>exp</code>, <code>log</code>,
-                        <code>log10</code>, <code>sqrt</code>, <code>abs</code> y las constantes
-                        <code>pi</code> y <code>e</code>. Los ángulos están en radianes; <code>log(x)</code>
-                        es el logaritmo natural y <code>log10(x)</code> es base 10. </p>
-        <form id="form-biseccion">
-            <p><label for="b-f">f(x)</label> <input id="b-f" name="funcion" value="e^(3*x) - 4" required></p>
-            <p><label for="b-a">Extremo izquierdo Xi (a)</label> <input id="b-a" name="a" type="number" step="any" value="0" required></p>
-            <p><label for="b-b">Extremo derecho Xf (b)</label> <input id="b-b" name="b" type="number" step="any" value="1" required></p>
-            <p><label for="b-tol">Error máximo Ea (%)</label> <input id="b-tol" name="tolerancia" type="number" step="any" min="0" value="1" required></p>
-            <p><label for="b-max">Iteraciones máximas</label> <input id="b-max" name="maximo" type="number" step="1" min="1" max="500" value="100" required></p>
-            <button type="submit">Calcular</button>
-        </form>
-            <div id="resultado-biseccion" aria-live="polite"></div>
-     </section>
 
 
 

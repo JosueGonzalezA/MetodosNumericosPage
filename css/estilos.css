@@ -89,14 +89,14 @@
 
 
 
-    #biseccion_Calculadora {
+    #biseccion_Calculadora , #newton , #punto-fijo_Calculadora {
     background: var(--tarjetas);
     border: 1px solid var(--borde);
     border-radius: 14px;
     padding: 1.5rem;
     }
 
-    #form-biseccion {
+    #form-biseccion , #form-newton , #form-punto-fijo {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.25rem;
@@ -104,18 +104,18 @@
     }
 
    
-    #form-biseccion p {
+    #form-biseccion p , #form-newton p , #form-punto-fijo p {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     margin: 0;
     }
 
-    #form-biseccion label {
+    #form-biseccion label , #form-newton label , #form-punto-fijo label {
     font-weight: bold;
     }
 
-    #form-biseccion input {
+    #form-biseccion input , #form-newton input , #form-punto-fijo input {
     padding: 0.75rem;
     border: 1px solid var(--borde);
     border-radius: 8px;
@@ -123,12 +123,12 @@
     color: #202b3a;
     font: inherit;
     }
-    #form-biseccion input:focus-visible {
+    #form-biseccion input:focus-visible , #form-newton input:focus-visible , #form-punto-fijo input:focus-visible {
         outline: 3px solid var(--botones);
     }
 
     
-    #form-biseccion button {
+    #form-biseccion button , #form-newton button , #form-punto-fijo button {
     grid-column: 1 / -1;
     justify-self: start;
     padding: 0.75rem 1.25rem;
@@ -140,7 +140,7 @@
     cursor: pointer;
     }
 
-    #form-biseccion button:hover {
+    #form-biseccion button:hover , #form-newton button:hover , #form-punto-fijo button:hover {
     background: #1a69ad;
     }
 

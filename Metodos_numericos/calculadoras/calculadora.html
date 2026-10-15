@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Calculadoras de bisección, punto fijo y Newton-Raphson.">
+  <title>Calculadoras de métodos numéricos</title>
+  <script src="app.js" defer></script>
+  <link rel="stylesheet" href="../../css/estilos.css">
+  <link rel="stylesheet" href="../../css/boton-arriba.css"> 
+</head>
+<body>
+  <header>
+    <h1>Calculadoras de métodos numéricos</h1>
+    <nav aria-label="Navegación principal">
+      <a class="navegacion" href="../../index.html">Inicio</a>
+      <a class="navegacion" href="../biseccion.html">Bisección</a>
+      <a class="navegacion" href="../newton-raphson.html">Newton-Raphson</a>
+      <a class="navegacion" href="../secante.html">Punto Fijo</a>
+    </nav>
+  </header>
+  <h1>Calculadoras de métodos numéricos</h1>
+  <p>Escribe las funciones usando <code>x</code>, <code>^</code> para potencias y punto para decimales. Puedes usar <code>sen</code>, <code>cos</code>, <code>tan</code>, <code>exp</code>, <code>ln</code>, <code>log</code>, <code>log10</code>, <code>raiz</code>, <code>absoluto</code>, <code>pi</code> y <code>e</code>. También se aceptan <code>sin</code>, <code>sqrt</code> y <code>abs</code>. Para el ejemplo de la foto sirven <code>e^3x-4</code> y <code>e^(3*x)-4</code>.</p>
+
+  <nav aria-label="Elegir calculadora">
+    <button type="button" data-section="biseccion" aria-pressed="true">Bisección</button>
+    <button type="button" data-section="punto-fijo" aria-pressed="false">Punto fijo</button>
+    <button type="button" data-section="newton" aria-pressed="false">Newton-Raphson</button>
+  </nav>
+
+  <section id="biseccion" aria-labelledby="titulo-biseccion">
+    <h2 id="titulo-biseccion" tabindex="-1">Bisección</h2>
+    <p>Elige <code>Xi</code> y <code>Xf</code> como extremos de un intervalo donde la función tenga signos opuestos. Cada <code>Xm</code> es el punto medio. El error aproximado es <code>Ea(x) = |(Xm actual - Xm anterior) / Xm actual| × 100%</code>; no se calcula en la primera fila.</p>
+    <form id="form-biseccion">
+      <p><label for="b-f">f(x)</label> <input id="b-f" name="funcion" value="e^(3*x) - 4" required></p>
+      <p><label for="b-a">Extremo izquierdo Xi (a)</label> <input id="b-a" name="a" type="number" step="any" value="0" required></p>
+      <p><label for="b-b">Extremo derecho Xf (b)</label> <input id="b-b" name="b" type="number" step="any" value="1" required></p>
+      <p><label for="b-tol">Error máximo Ea (%)</label> <input id="b-tol" name="tolerancia" type="number" step="any" min="0" value="1" required></p>
+      <p><label for="b-max">Iteraciones máximas</label> <input id="b-max" name="maximo" type="number" step="1" min="1" max="500" value="100" required></p>
+      <button type="submit">Calcular bisección</button>
+    </form>
+    <div id="resultado-biseccion" aria-live="polite"></div>
+  </section>
+
+  <section id="punto-fijo" aria-labelledby="titulo-punto-fijo" hidden>
+    <h2 id="titulo-punto-fijo" tabindex="-1">Punto fijo</h2>
+    <p>Escribe la función original <code>f(x)</code> y una forma despejada <code>g₁(x)</code> para resolver <code>x = g₁(x)</code>. La tabla evalúa ambas funciones en cada <code>X</code>. Se detiene cuando <code>Ea = |(g₁(X) - X) / g₁(X)| × 100%</code> es menor que el porcentaje indicado.</p>
+    <form id="form-punto-fijo">
+      <p><label for="p-f">f(x)</label> <input id="p-f" name="original" value="2*e^(x^2)-5*x" required></p>
+      <p><label for="p-g">g₁(x)</label> <input id="p-g" name="funcion" value="(2/5)*e^(x^2)" required></p>
+      <p><label for="p-x0">Valor inicial (x₀)</label> <input id="p-x0" name="x0" type="number" step="any" value="0" required></p>
+      <p><label for="p-tol">Error máximo Ea (%)</label> <input id="p-tol" name="tolerancia" type="number" step="any" min="0" value="0.01" required></p>
+      <p><label for="p-max">Iteraciones máximas</label> <input id="p-max" name="maximo" type="number" step="1" min="1" max="500" value="100" required></p>
+      <button type="submit">Calcular punto fijo</button>
+    </form>
+    <div id="resultado-punto-fijo" aria-live="polite"></div>
+  </section>
+
+  <section id="newton" aria-labelledby="titulo-newton" hidden>
+    <h2 id="titulo-newton" tabindex="-1">Newton-Raphson</h2>
+    <p>La sucesión se calcula con <code>xₙ₊₁ = xₙ - f(xₙ) / f'(xₙ)</code>. Se detiene cuando el cambio relativo entre dos valores consecutivos es menor que el porcentaje indicado.</p>
+    <form id="form-newton">
+      <p><label for="n-f">f(x)</label> <input id="n-f" name="funcion" value="x^5 - x - 1" required></p>
+      <p><label for="n-df">f'(x) (opcional)</label> <input id="n-df" name="derivada" value="5*x^4 - 1"></p>
+      <p>Si dejas la derivada vacía, se aproximará numéricamente.</p>
+      <p><label for="n-x0">Valor inicial (x₀)</label> <input id="n-x0" name="x0" type="number" step="any" value="1" required></p>
+      <p><label for="n-tol">Error máximo Ea (%)</label> <input id="n-tol" name="tolerancia" type="number" step="any" min="0" value="0.000001" required></p>
+      <p><label for="n-max">Iteraciones máximas</label> <input id="n-max" name="maximo" type="number" step="1" min="1" max="500" value="100" required></p>
+      <button type="submit">Calcular Newton-Raphson</button>
+    </form>
+    <div id="resultado-newton" aria-live="polite"></div>
+  </section>
+</body>
+</html>
