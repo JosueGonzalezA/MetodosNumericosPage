@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Métodos Numéricos | Bisección</title>
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/boton-arriba.css">
+</head>
+<body>
+    <header>
+        <h1>Métodos Numéricos</h1>
+        <h2>Universidad Nacional Autónoma de México</h2>
+        <img class="logo_unam" src="../Imagenes/inicio/logo_unam.jpeg " alt="Logotipo de la UNAM">
+        <h3>By: CMMP + Anexadas</h3>
+        <nav aria-label="Navegación principal">
+            <a class="navegacion" href="../index.html">Inicio</a>
+            <a class="navegacion" href="newton-raphson.html">Newton-Raphson</a>
+            <a class="navegacion" href="secante.html">Secante</a>
+            <a class="navegacion" href="/Metodos_numericos/calculadoras/calculadora.html">Calculadora</a>
+        </nav>
+    </header>
+    <main>
+<section id="biseccion">
+    <h2>Metodo de Biseccion</h2>
+
+    <p>
+        El metodo de biseccion es un metodo numerico iterativo
+        que permite encontrar una aproximacion de la raiz de una
+        funcion. Consiste en dividir repetidamente un intervalo
+        en dos partes hasta encontrar la raiz con la precision deseada.
+    </p>
+
+    <h3>Pasos para resolver el metodo de biseccion</h3>
+
+    <ol>
+        <li>
+            <strong>Definir la funcion:</strong>
+            Identificar la funcion f(x) de la cual se desea encontrar
+            una raiz, es decir, un valor de x para el que f(x) = 0.
+        </li>
+
+        <li>
+            <strong>Elegir el intervalo inicial:</strong>
+            Seleccionar dos valores, a y b, que delimiten el intervalo
+            donde se encuentra la raiz. La funcion debe ser continua
+            en el intervalo y los valores f(a) y f(b) deben tener
+            signos opuestos, es decir:
+            <p>f(a) * f(b) &lt; 0</p>
+        </li>
+
+        <li>
+            <strong>Calcular el punto medio:</strong>
+            Obtener el punto medio del intervalo utilizando la formula:
+            <p>xr = (a + b) / 2</p>
+        </li>
+
+        <li>
+            <strong>Evaluar la funcion:</strong>
+            Sustituir el valor de xr en la funcion para calcular f(xr).
+        </li>
+
+        <li>
+            <strong>Determinar el nuevo intervalo:</strong>
+            Comparar los signos de f(a) y f(xr).
+            <ul>
+                <li>
+                    Si f(a) * f(xr) &lt; 0, la raiz esta en [a, xr].
+                    Se actualiza b = xr.
+                </li>
+                <li>
+                    Si f(a) * f(xr) &gt; 0, la raiz esta en [xr, b].
+                    Se actualiza a = xr.
+                </li>
+                <li>
+                    Si f(xr) = 0, se encontro la raiz exacta y
+                    el procedimiento termina.
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <strong>Repetir el procedimiento:</strong>
+            Calcular nuevamente el punto medio con el intervalo
+            actualizado y repetir los pasos hasta alcanzar la
+            precision deseada.
+        </li>
+
+        <li>
+            <strong>Obtener la aproximacion final:</strong>
+            Cuando se cumpla el criterio de paro, el ultimo punto
+            medio calculado se toma como aproximacion de la raiz.
+        </li>
+    </ol>
+
+    <h3>Ejemplo </h3>
+
+    <p>Encontrar una raiz de la siguiente funcion:</p>
+
+    <p><strong>f(x) = x^2 - 4</strong></p>
+
+    <p>Elegimos el intervalo inicial [1, 3]. Evaluamos sus extremos:</p>
+
+    <ul>
+        <li>f(1) = 1^2 - 4 = -3</li>
+        <li>f(3) = 3^2 - 4 = 5</li>
+    </ul>
+
+    <p>
+        Como los resultados tienen signos opuestos, podemos aplicar
+        el metodo de biseccion.
+    </p>
+
+    <h4>Primera iteracion</h4>
+
+    <p>Calculamos el punto medio:</p>
+
+    <p>xr = (1 + 3) / 2 = 2</p>
+
+    <p>Evaluamos la funcion:</p>
+
+    <p>f(2) = 2^2 - 4 = 0</p>
+
+    <p>
+        <strong>Resultado:</strong> La raiz es x = 2.
+        El procedimiento termina porque encontramos un valor
+        que hace que la funcion sea igual a cero.
+    </p>
+
+
+
+
+
+
+
+
+
+
+
+    <h3>Diferencia entre metodo iterativo e interactivo</h3>
+
+    <p>
+        Un metodo iterativo es un procedimiento que se repite
+        varias veces para aproximarse a una solucion. El metodo
+        de biseccion pertenece a esta categoria.
+    </p>
+
+    <p>
+        En cambio, un sistema interactivo permite que el usuario
+        introduzca datos y reciba una respuesta, como una calculadora
+        dentro de una pagina web.
+    </p>
+
+</section>
+    </main>
+    <button id="btn-arriba" aria-label="Volver arriba">↑</button>
+    <script src="../scripts/boton-arriba.js" defer></script>
+    <script src="../scripts/calculadoras.js" defer></script>
+    
+</body>
+</html>
