@@ -104,7 +104,7 @@ main.newton-raphson > img {
   object-fit: contain;
 }
 
-<<<<<<< HEAD
+
         *, *::before, *::after {
             box-sizing: border-box;
         }
@@ -116,7 +116,7 @@ main.newton-raphson > img {
             padding: 1rem;
             background: var(--fondoprincipal);
         }
-=======
+
 .history ul {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -125,7 +125,7 @@ main.newton-raphson > img {
   padding: 0;
   list-style: none;
 }
->>>>>>> 12bf84adab036ba31a2129f517e4f2bdab5a057f
+
 
 .history img {
   width: 100%;
