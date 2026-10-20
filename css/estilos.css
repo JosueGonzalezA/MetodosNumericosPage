@@ -1,21 +1,110 @@
 :root {
-            color-scheme: light;
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #202b3a;
-            
-            --fondoprincipal: #1f2b3b;
-            --fondosecundario: #19283f;
-            --texto: #fff;
-            --botones: #b99050;
-            --tarjetas: #283349;
-            --tarjetas-oscuras: #0e1728;
-            --borde: #3b485b;
+  color-scheme: light;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #202b3a;
+
+  --fondoprincipal: #1f2b3b;
+  --fondosecundario: #19283f;
+  --texto: #fff;
+  --botones: #b99050;
+  --tarjetas: #283349;
+  --tarjetas-oscuras: #0e1728;
+  --borde: #3b485b;
+}
+
+*, *::before,
+*::after {
+  box-sizing: border-box;
+}   
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  color: var(--texto);
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+  padding-bottom: 5rem;
+  background: var(--fondoprincipal);
+}
+
+header {
+  padding: 1.5rem;
+  text-align: center;
+  background: var(--fondosecundario);
+  border-radius: 0.75rem;
+  border: 1px solid var(--borde);
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem 1.25rem;
+}
+
+a {
+  color: #124f86;
+}
+
+code {
+  background: var(--tarjetas-oscuras);
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.25rem;
+}
+
+a.navegacion,
+.navegacion_calculadoras {
+  color: var(--texto);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.35rem;
+  background: var(--botones);
+  transition: background 0.2s, transform 0.2s;
+}
+
+a.navegacion:hover,
+.navegacion_calculadoras:hover {
+  background: var(--tarjetas-oscuras);
+  transform: translateY(-2px);
+}
+
+button.navegacion_calculadoras {
+  color: var(--texto);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.35rem;
+  border: var(--borde);
+  background: var(--botones);
+  cursor: pointer;
+  font: inherit;
+}
+
+button.navegacion_calculadoras[aria-pressed="true"] {
+  background: var(--tarjetas);
+}
+
+.selector-calculadoras {
+  margin: 1.5rem 0;
+}
 
 
+img {
+  width: 150px;
+  height: 100px;
+  object-fit: contain;
+}
 
-        }
+main.newton-raphson > img {
+  width: 5rem;
+  height: 5rem;
+  object-fit: contain;
+}
 
+<<<<<<< HEAD
         *, *::before, *::after {
             box-sizing: border-box;
         }
@@ -27,159 +116,273 @@
             padding: 1rem;
             background: var(--fondoprincipal);
         }
+=======
+.history ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  max-width: calc((250px * 3) + (15px * 2));
+  gap: 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+>>>>>>> 12bf84adab036ba31a2129f517e4f2bdab5a057f
 
-        header {
-            padding: 1.5rem;
-            text-align: center;
-            background: var(--fondosecundario);
-            border-radius: 0.75rem;
-            border: 1px solid var(--borde);
-        }
+.history img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 6px;
+}
 
-        nav {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.75rem 1.25rem;
-        }
-
-        a {
-            color: #124f86;
-        }
-
-
-
-        a.navegacion , .navegacion_calculadoras {
-            color: var(--texto);
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 0.35rem;
-            background: var(--botones);
-        }
-        a.navegacion:hover , .navegacion_calculadoras:hover {
-            background: var(--tarjetas-oscuras);
-        }
-        button.navegacion_calculadoras {
-            color: var(--texto);
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 0.35rem;
-            border:var(--borde);
-            background: var(--botones);
-        }
-        button.navegacion_calculadoras[aria-pressed="true"] {
-            background: var(--tarjetas);
-        }
-
-   
-        img {
-            width: 150px;
-            height: 100px;
-            object-fit: contain;
-        }
-        main.newton-raphson > img{
-            width: 5rem;
-            height: 5rem;
-            object-fit: contain;
-        }
-        
-
-        .history ul {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            max-width: calc((250px * 3) + (15px * 2)); 
-            gap: 1.5rem;
-            padding: 0;
-            list-style: none;
-        }
-        .history img {
-            width: 100%;
-            aspect-ratio: 4 / 3;
-            object-fit: cover;
-            border-radius: 6px;
-        }
+.site-logo {
+  width: 150px;
+  height: 100px;
+  object-fit: contain;
+}
 
 
-     
- 
-    #inicio , #biseccion, #newton-raphson, #punto-fijo {
-    background: var(--fondoprincipal);
-    border: 1px solid var(--borde);
-    border-radius: 14px;
-    padding: 1.5rem;
-    }
+#inicio,
+#newton-raphson {
+  background: var(--fondoprincipal);
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  padding: 1.5rem;
+}
+
+.calculadora {
+  background: var(--tarjetas);
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.descripcion {
+  margin: 0 0 1.25rem;
+}
+
+
+.formulario {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.formulario .campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.formulario .campo-ancho,
+.formulario .teclado,
+.formulario .formas {
+  grid-column: 1 / -1;
+}
+
+.formulario label {
+  font-weight: bold;
+}
+
+.formulario input,
+.formulario select {
+  padding: 0.75rem;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  background: #fff;
+  color: #202b3a;
+  font: inherit;
+}
+
+.formulario input:focus-visible,
+.formulario select:focus-visible {
+  outline: 3px solid var(--botones);
+}
+
+.formulario button[type="submit"] {
+  grid-column: 1 / -1;
+  justify-self: start;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  background: #14538a;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.formulario button[type="submit"]:hover {
+  background: #1a69ad;
+}
+
+.teclado {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.teclado button {
+  padding: 0.4rem 0.75rem;
+  min-width: 2.5rem;
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  background: var(--tarjetas-oscuras);
+  color: var(--texto);
+  font: inherit;
+  cursor: pointer;
+}
+
+.teclado button:hover {
+  background: var(--botones);
+}
+
+.teclado button:focus-visible {
+  outline: 3px solid var(--botones);
+}
+
+
+.formas {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  background: var(--tarjetas-oscuras);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+}
+
+.formas:empty {
+  display: none;
+}
+
+.resultado {
+  margin-top: 1.5rem;
+  overflow-x: auto;
+}
+
+.resultado:empty {
+  display: none;
+}
+
+.resultado table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--tarjetas-oscuras);
+  border-radius: 8px;
+}
+
+.resultado th,
+.resultado td {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--borde);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.resultado th {
+  background: var(--fondosecundario);
+  color: var(--texto);
+}
+
+.resultado tbody tr:nth-child(even) {
+  background: var(--tarjetas);
+}
+
+.resultado p {
+  margin: 0.5rem 0;
+}
+
+
+@media (max-width: 700px) {
+  .formulario {
+    grid-template-columns: 1fr;
+
+  }
+  .footer-biblioteca {
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    padding: 0.7rem 0.75rem;
+  }
+
+  .footer-biblioteca::before,
+  .footer-biblioteca::after {
+    display: none;
+  }
+}
+
+
+.barra-inferior {
+  position: fixed;
+  bottom: 0.75rem;
+  left: 0;
+  right: 0;
+  z-index: 50;
+
+  width: min(960px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 0;
+  min-inline-size: 0;
+  overflow: hidden;
+
+  background: rgba(14, 23, 40, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--botones);
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+}
+
+
+.barra-inferior::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #f0c878, transparent);
+  background-size: 200% 100%;
+  animation: brillo-barra 4s linear infinite;
+}
+
+.footer-biblioteca {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  color: var(--texto);
+  font-weight: bold;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0 0 12px rgba(185, 144, 80, 0.6);
+}
+
+.footer-biblioteca::before,
+.footer-biblioteca::after {
+  color: var(--botones);
+  font-size: 1.3rem;
+  text-shadow: 0 0 10px var(--botones);
+}
+
+.footer-biblioteca::before { content: "∑"; }
+.footer-biblioteca::after  { content: "∫"; }
 
 
 
-    #biseccion_Calculadora , #newton , #punto-fijo_Calculadora {
-    background: var(--tarjetas);
-    border: 1px solid var(--borde);
-    border-radius: 14px;
-    padding: 1.5rem;
-    }
 
-    #form-biseccion , #form-newton , #form-punto-fijo {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
-    align-items: start;
-    }
-
-   
-    #form-biseccion p , #form-newton p , #form-punto-fijo p {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin: 0;
-    }
-
-    #form-biseccion label , #form-newton label , #form-punto-fijo label {
-    font-weight: bold;
-    }
-
-    #form-biseccion input , #form-newton input , #form-punto-fijo input {
-    padding: 0.75rem;
-    border: 1px solid var(--borde);
-    border-radius: 8px;
-    background: #fff;
-    color: #202b3a;
-    font: inherit;
-    }
-    #form-biseccion input:focus-visible , #form-newton input:focus-visible , #form-punto-fijo input:focus-visible {
-        outline: 3px solid var(--botones);
-    }
-
-    
-    #form-biseccion button , #form-newton button , #form-punto-fijo button {
-    grid-column: 1 / -1;
-    justify-self: start;
-    padding: 0.75rem 1.25rem;
-    border: none;
-    border-radius: 8px;
-    background: #14538a;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    }
-
-    #form-biseccion button:hover , #form-newton button:hover , #form-punto-fijo button:hover {
-    background: #1a69ad;
-    }
-
-
-    @media (max-width: 700px) {
-    #form-biseccion {
-        grid-template-columns: 1fr;
-    }
-    }
+@keyframes brillo-barra {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
 
 
 
-
-    .site-logo {
-        width: 150px;
-        height: 100px;
-        object-fit: contain;
-    }
+@media (prefers-reduced-motion: reduce) {
+  .barra-inferior::before {
+    animation: none;
+  }
+}
 
 
