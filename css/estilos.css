@@ -276,10 +276,11 @@ main.newton-raphson > img {
 
 .resultado th,
 .resultado td {
-  padding: 0.5rem 0.75rem;
+  padding: 0.4rem 0.5rem;
   border: 1px solid var(--borde);
   text-align: right;
   white-space: nowrap;
+  font-size: 0.85rem;
 }
 
 .resultado th {
@@ -296,28 +297,7 @@ main.newton-raphson > img {
 }
 
 
-@media (max-width: 700px) {
-  .formulario {
-    grid-template-columns: minmax(0, 1fr);
 
-  }
-  .footer-biblioteca {
-    font-size: 0.75rem;
-    letter-spacing: 0.04em;
-    padding: 0.7rem 0.75rem;
-  }
-
-  .footer-biblioteca::before,
-  .footer-biblioteca::after {
-    display: none;
-  }
-}
-
-.resultado th,
-.resultado td {
-    padding: 0.4rem 0.5rem;
-    font-size: 0.85rem;
-}
 
 
 .barra-inferior {
@@ -395,3 +375,31 @@ main.newton-raphson > img {
 }
 
 
+@media (max-width: 700px) {
+  .formulario {
+    grid-template-columns: minmax(0, 1fr);
+
+  }
+  .footer-biblioteca {
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    padding: 0.7rem 0.75rem;
+  }
+
+  .footer-biblioteca::before,
+  .footer-biblioteca::after {
+    display: none;
+  }
+    .teclado button {
+        padding: 0.15rem 0.4rem;
+        min-width: 1.5rem;
+        border: 1px solid var(--borde);
+        border-radius: 6px;
+        background: var(--tarjetas-oscuras);
+        color: var(--texto);
+        font: inherit;
+        cursor: pointer;
+    }
+
+
+}
