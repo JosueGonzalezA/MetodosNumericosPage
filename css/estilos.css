@@ -22,6 +22,7 @@ body {
   max-width: 1000px;
   margin: 0 auto;
   padding: 1rem;
+  padding-bottom: 5rem;
   background: var(--fondoprincipal);
 }
 
@@ -57,11 +58,13 @@ a.navegacion,
   padding: 0.5rem 1rem;
   border-radius: 0.35rem;
   background: var(--botones);
+  transition: background 0.2s, transform 0.2s;
 }
 
 a.navegacion:hover,
 .navegacion_calculadoras:hover {
   background: var(--tarjetas-oscuras);
+  transform: translateY(-2px);
 }
 
 button.navegacion_calculadoras {
@@ -274,6 +277,92 @@ main.newton-raphson > img {
 @media (max-width: 700px) {
   .formulario {
     grid-template-columns: 1fr;
+
+  }
+  .footer-biblioteca {
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    padding: 0.7rem 0.75rem;
+  }
+
+  .footer-biblioteca::before,
+  .footer-biblioteca::after {
+    display: none;
+  }
+}
+
+
+.barra-inferior {
+  position: fixed;
+  bottom: 0.75rem;
+  left: 0;
+  right: 0;
+  z-index: 50;
+
+  width: min(960px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 0;
+  min-inline-size: 0;
+  overflow: hidden;
+
+  background: rgba(14, 23, 40, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--botones);
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+}
+
+
+.barra-inferior::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #f0c878, transparent);
+  background-size: 200% 100%;
+  animation: brillo-barra 4s linear infinite;
+}
+
+.footer-biblioteca {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  color: var(--texto);
+  font-weight: bold;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0 0 12px rgba(185, 144, 80, 0.6);
+}
+
+.footer-biblioteca::before,
+.footer-biblioteca::after {
+  color: var(--botones);
+  font-size: 1.3rem;
+  text-shadow: 0 0 10px var(--botones);
+}
+
+.footer-biblioteca::before { content: "∑"; }
+.footer-biblioteca::after  { content: "∫"; }
+
+
+
+
+@keyframes brillo-barra {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+
+
+@media (prefers-reduced-motion: reduce) {
+  .barra-inferior::before {
+    animation: none;
   }
 }
 
