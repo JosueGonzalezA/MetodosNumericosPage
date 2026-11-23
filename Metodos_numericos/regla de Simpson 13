@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Integración numérica mediante la regla de Simpson 1/3</title>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']]
+  }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<h1>Integración numérica mediante la regla de Simpson 1/3</h1>
+
+<p>La integración numérica consiste en aproximar el valor de una integral definida cuando obtener una solución analítica resulta complicado o cuando solamente disponemos de datos experimentales.</p>
+
+<p>\(I = \int_a^b f(x)\,dx\)</p>
+
+<p>La regla de Simpson 1/3 aproxima la función mediante una parábola que pasa por tres puntos.</p>
+
+<p>Fórmula:</p>
+
+<p>\(\int_a^b f(x)\,dx \approx \frac{b - a}{6}\left[f(a) + 4f\left(\frac{a + b}{2}\right) + f(b)\right]\)</p>
+
+<p>Donde:</p>
+
+<p>\(a\): Límite inferior de integración</p>
+<p>\(b\): Límite superior de integración</p>
+<p>\(f(a)\): Valor de la función en el extremo izquierdo</p>
+<p>\(f(b)\): Valor de la función en el extremo derecho</p>
+<p>\(f\left(\frac{a+b}{2}\right)\): Valor de la función en el punto medio</p>
+<p>\(I\): Valor aproximado de la integral</p>
+
+<p>Mayor precisión (Regla compuesta de Simpson 1/3):</p>
+
+<p>\(I \approx \frac{h}{3}\left[f(x_0) + f(x_n) + 4\sum_{\substack{i=1 \\ i\text{ impar}}}^{n-1} f(x_i) + 2\sum_{\substack{i=2 \\ i\text{ par}}}^{n-2} f(x_i)\right]\)</p>
+
+<p>Donde \(h = \frac{b - a}{n}\), \(x_i = a + ih\), y \(n\) debe ser un número par de subintervalos.</p>
+
+<h2>Ejemplo: Calcular mediante la regla de Simpson 1/3 \(I = \int_0^2 (x^4 + 1)\,dx\), utiliza \(n = 4\) subintervalos.</h2>
+
+<p>Paso 1. Se calcula el ancho de cada intervalo.</p>
+
+<p>\(h = \frac{2 - 0}{4} = 0.5\)</p>
+
+<p>Paso 2. Construimos la tabla de valores.</p>
+
+<table border="1">
+<tr>
+<th>\(i\)</th>
+<th>\(x_i\)</th>
+<th>\(f(x_i) = x_i^4 + 1\)</th>
+<th>Coeficiente</th>
+</tr>
+<tr><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+<tr><td>1</td><td>0.5</td><td>1.0625</td><td>4</td></tr>
+<tr><td>2</td><td>1</td><td>2</td><td>2</td></tr>
+<tr><td>3</td><td>1.5</td><td>6.0625</td><td>4</td></tr>
+<tr><td>4</td><td>2</td><td>17</td><td>1</td></tr>
+</table>
+
+<p>Paso 3. Se aplica la fórmula.</p>
+
+<p>\(I \approx \frac{0.5}{3}\left[1 + 4(1.0625) + 2(2) + 4(6.0625) + 17\right]\)</p>
+
+<p>\(I \approx \frac{0.5}{3}[50.5] \rightarrow I \approx 8.416667\)</p>
+
+<p>Paso 4. Calculamos el valor exacto.</p>
+
+<p>\(I = \left[\frac{x^5}{5} + x\right]_0^2 = \frac{32}{5} + 2 = 8.4\)</p>
+
+<p>Error absoluto: \(E_a = |8.4 - 8.416667| = 0.016667\); Error relativo porcentual: \(E_r = \frac{|8.4 - 8.416667|}{8.4} \times 100 = 0.198413\%\).</p>
+
+<h2>Serie 1 - Ejercicio 1. Calcular \(I = \int_0^2 (x^3 + 2x + 1)\,dx\) con \(n = 4\) subintervalos.</h2>
+
+<p>Paso 1. Calcular \(h\).</p>
+
+<p>\(h = \frac{2 - 0}{4} = 0.5\)</p>
+
+<p>Paso 2. Construir la tabla de valores.</p>
+
+<table border="1">
+<tr>
+<th>\(i\)</th>
+<th>\(x_i\)</th>
+<th>\(f(x_i)\)</th>
+<th>Coeficiente</th>
+</tr>
+<tr><td>0</td><td>0.000000</td><td>1.000000</td><td>1</td></tr>
+<tr><td>1</td><td>0.500000</td><td>2.125000</td><td>4</td></tr>
+<tr><td>2</td><td>1.000000</td><td>4.000000</td><td>2</td></tr>
+<tr><td>3</td><td>1.500000</td><td>7.375000</td><td>4</td></tr>
+<tr><td>4</td><td>2.000000</td><td>13.000000</td><td>1</td></tr>
+</table>
+
+<p>Paso 3. Aplicar la fórmula y comparar con el valor exacto.</p>
+
+<p>\(I \approx \frac{0.5}{3}[1.000000 + 4(2.125000) + 2(4.000000) + 4(7.375000) + 13.000000] = \frac{0.5}{3}[60.000000] = 10.000000\)</p>
+
+<p>Valor exacto: \(\left[\frac{x^4}{4} + x^2 + x\right]_0^2 = 4 + 4 + 2 = 10.000000\)</p>
+
+<p>Resultado: El valor aproximado es \(10.000000\) y es idéntico al valor exacto \(10.000000\) (error absoluto \(= 0.000000\)).</p>
+
+<h2>Serie 1 - Ejercicio 2. Calcular \(I = \int_0^1 e^x\,dx\) con \(n = 4\) subintervalos.</h2>
+
+<p>Paso 1. Calcular \(h\).</p>
+
+<p>\(h = \frac{1 - 0}{4} = 0.25\)</p>
+
+<p>Paso 2. Construir la tabla de valores.</p>
+
+<table border="1">
+<tr>
+<th>\(i\)</th>
+<th>\(x_i\)</th>
+<th>\(f(x_i) = e^x\)</th>
+<th>Coeficiente</th>
+</tr>
+<tr><td>0</td><td>0.000000</td><td>1.000000</td><td>1</td></tr>
+<tr><td>1</td><td>0.250000</td><td>1.284025</td><td>4</td></tr>
+<tr><td>2</td><td>0.500000</td><td>1.648721</td><td>2</td></tr>
+<tr><td>3</td><td>0.750000</td><td>2.117000</td><td>4</td></tr>
+<tr><td>4</td><td>1.000000</td><td>2.718282</td><td>1</td></tr>
+</table>
+
+<p>Paso 3. Aplicar la fórmula y determinar el error absoluto.</p>
+
+<p>\(I \approx \frac{0.25}{3}[1.000000 + 4(1.284025) + 2(1.648721) + 4(2.117000) + 2.718282] = 1.718319\)</p>
+
+<p>Valor exacto: \(\left[e^x\right]_0^1 = e^1 - e^0 = 1.718282\)</p>
+
+<p>Error absoluto: \(E_a = |1.718282 - 1.718319| = 0.000037\).</p>
+
+<h2>Serie 1 - Ejercicio 3. Calcular \(I = \int_0^1 \frac{1}{1 + x^2}\,dx\) con \(n = 6\) subintervalos.</h2>
+
+<p>Paso 1. Calcular \(h\).</p>
+
+<p>\(h = \frac{1 - 0}{6} = 0.166667\)</p>
+
+<p>Paso 2. Construir la tabla de valores.</p>
+
+<table border="1">
+<tr>
+<th>\(i\)</th>
+<th>\(x_i\)</th>
+<th>\(f(x_i)\)</th>
+<th>Coeficiente</th>
+</tr>
+<tr><td>0</td><td>0.000000</td><td>1.000000</td><td>1</td></tr>
+<tr><td>1</td><td>0.166667</td><td>0.972973</td><td>4</td></tr>
+<tr><td>2</td><td>0.333333</td><td>0.900000</td><td>2</td></tr>
+<tr><td>3</td><td>0.500000</td><td>0.800000</td><td>4</td></tr>
+<tr><td>4</td><td>0.666667</td><td>0.692308</td><td>2</td></tr>
+<tr><td>5</td><td>0.833333</td><td>0.590164</td><td>4</td></tr>
+<tr><td>6</td><td>1.000000</td><td>0.500000</td><td>1</td></tr>
+</table>
+
+<p>Paso 3. Aplicar la fórmula y calcular el error relativo porcentual.</p>
+
+<p>\(I \approx \frac{0.166667}{3}[1.000000 + 4(0.972973) + 2(0.900000) + 4(0.800000) + 2(0.692308) + 4(0.590164) + 0.500000] = 0.785398\)</p>
+
+<p>Valor analítico: \(\left[\arctan(x)\right]_0^1 = \frac{\pi}{4} = 0.785398\)</p>
+
+<p>Error relativo porcentual: \(E_r = \frac{|0.78539816 - 0.78539795|}{0.78539816} \times 100 = 0.000027\%\).</p>
+
+<h2>Serie 1 - Ejercicio 4. Calcular \(I = \int_0^1 \sin(x^2)\,dx\) en radianes con \(n = 8\) subintervalos.</h2>
+
+<p>Paso 1. Calcular \(h\).</p>
+
+<p>\(h = \frac{1 - 0}{8} = 0.125\)</p>
+
+<p>Paso 2. Construir la tabla de evaluación en radianes.</p>
+
+<table border="1">
+<tr>
+<th>\(i\)</th>
+<th>\(x_i\) (rad)</th>
+<th>\(f(x_i) = \sin(x_i^2)\)</th>
+<th>Coeficiente</th>
+</tr>
+<tr><td>0</td><td>0.000000</td><td>0.000000</td><td>1</td></tr>
+<tr><td>1</td><td>0.125000</td><td>0.015624</td><td>4</td></tr>
+<tr><td>2</td><td>0.250000</td><td>0.062459</td><td>2</td></tr>
+<tr><td>3</td><td>0.375000</td><td>0.140162</td><td>4</td></tr>
+<tr><td>4</td><td>0.500000</td><td>0.247404</td><td>2</td></tr>
+<tr><td>5</td><td>0.625000</td><td>0.380761</td><td>4</td></tr>
+<tr><td>6</td><td>0.750000</td><td>0.533490</td><td>2</td></tr>
+<tr><td>7</td><td>0.875000</td><td>0.692985</td><td>4</td></tr>
+<tr><td>8</td><td>1.000000</td><td>0.841471</td><td>1</td></tr>
+</table>
+
+<p>Paso 3. Aplicar la fórmula.</p>
+
+<p>\(I \approx \frac{0.125}{3}[7.446306] = 0.310263\)</p>
+
+<p>Explicación: La integración numérica es especialmente útil para \(\sin(x^2)\) porque no tiene una antiderivada elemental cerrada (es una integral de Fresnel), por lo que no puede resolverse mediante reglas básicas de integración analítica.</p>
+
+<h2>Serie 1 - Ejercicio 5. Calcular \(I = \int_0^2 \ln(1 + x)\,dx\) con \(n = 10\) subintervalos.</h2>
+
+<p>Paso 1. Calcular \(h\).</p>
+
+<p>\(h = \frac{2 - 0}{10} = 0.2\)</p>
+
+<p>Paso 2. Construir la tabla de valores.</p>
+
+<table border="1">
+<tr>
+<th>\(i\)</th>
+<th>\(x_i\)</th>
+<th>\(f(x_i) = \ln(1 + x_i)\)</th>
+<th>Coeficiente</th>
+</tr>
+<tr><td>0</td><td>0.000000</td><td>0.000000</td><td>1</td></tr>
+<tr><td>1</td><td>0.200000</td><td>0.182322</td><td>4</td></tr>
+<tr><td>2</td><td>0.400000</td><td>0.336472</td><td>2</td></tr>
+<tr><td>3</td><td>0.600000</td><td>0.470004</td><td>4</td></tr>
+<tr><td>4</td><td>0.800000</td><td>0.587787</td><td>2</td></tr>
+<tr><td>5</td><td>1.000000</td><td>0.693147</td><td>4</td></tr>
+<tr><td>6</td><td>1.200000</td><td>0.788457</td><td>2</td></tr>
+<tr><td>7</td><td>1.400000</td><td>0.875469</td><td>4</td></tr>
+<tr><td>8</td><td>1.600000</td><td>0.955511</td><td>2</td></tr>
+<tr><td>9</td><td>1.800000</td><td>1.029619</td><td>4</td></tr>
+<tr><td>10</td><td>2.000000</td><td>1.098612</td><td>1</td></tr>
+</table>
+
+<p>Paso 3. Aplicar la fórmula, calcular valor exacto y errores.</p>
+
+<p>\(I \approx \frac{0.2}{3}[19.437341] = 1.295823\)</p>
+
+<p>Valor exacto: \(\left[(1 + x)\ln(1 + x) - x\right]_0^2 = 3\ln(3) - 2 = 1.295837\)</p>
+
+<p>Error absoluto: \(E_a = |1.295837 - 1.295823| = 0.000014\); Error relativo porcentual: \(E_r = \frac{0.00001411}{1.29583687} \times 100 = 0.001089\%\).</p>
+
+<p>Explicación: Al aumentar el número de subintervalos \(n\), el ancho \(h\) disminuye y las parábolas ajustan mejor la curva, reduciendo el error con rapidez (en orden \(O(h^4)\)).</p>
+
+<h2>Serie 2 - Ejercicio 1. Calcular \(I = \int_0^2 (x^4 + 3x^2 + 2)\,dx\) con \(n = 4\) subintervalos.</h2>
+
+<p>Paso 1. Calcular \(h = \frac{2 - 0}{4} = 0.5\).</p>
+
+<table border="1">
+<tr>
+<th>\(i\)</th>
+<th>\(x_i\)</th>
+<th>\(f(x_i)\)</th>
+<th>Coeficiente</th>
+</tr>
+<tr><td>0</td><td>0.000000</td><td>2.000000</td><td>1</td></tr>
+<tr><td>1</td><td>0.500000</td><td>2.812500</td><td>4</td></tr>
+<tr><td>2</td><td>1.000000</td><td>6.000000</td><td>2</td></tr>
+<tr><td>3</td><td>1.500000</td><td>13.812500</td><td>4</td></tr>
+<tr><td>4</td><td>2.000000</td><td>30.000000</td><td>1</td></tr>
+</table>
+
+<p>Paso 2. Aplicar la fórmula y calcular errores.</p>
+
+<p>\(I \approx \frac{0.5}{3}[110.500000] = 18.416667\)</p>
+
+<p>Valor exacto: \(\left[\frac{x^5}{5} + x^3 + 2x\right]_0^2 = \frac{32}{5} + 8 + 4 = 18.400000\)</p>
+
+<p>Error absoluto: \(E_a = 0.016667\); Error relativo porcentual: \(E_r = 0.090580\%\).</p>
+
+<h2>Serie 2 - Ejercicio 2. Calcular \(I = \int_0^{\pi/2} e^{-x}\cos(x)\,dx\) en radianes con \(n = 6\) subintervalos.</h2>
+
+<p>Paso 1. Calcular \(h = \frac{\pi/2 - 0}{6} = \frac{\pi}{12} = 0.261799\).</p>
+
+<table border="1">
+<tr>
+<th>\(i\)</th>
+<th>\(x_i\) (rad)</th>
+<th>\(f(x_i) = e^{-x_i}\cos(x_i)\)</th>
+<th>Coeficiente</th>
+</tr>
+<tr><td>0</td><td>0.000000</td><td>1.000000</td><td>1</td></tr>
+<tr><td>1</td><td>0.261799</td><td>0.743622</td><td>4</td></tr>
+<tr><td>2</td><td>0.523599</td><td>0.513280</td><td>2</td></tr>
+<tr><td>3</td><td>0.785398</td><td>0.322397</td><td>4</td></tr>
+<tr><td>4</td><td>1.047198</td><td>0.175499</td><td>2</td></tr>
+<tr><td>5</td><td>1.308997</td><td>0.069937</td><td>4</td></tr>
+<tr><td>6</td><td>1.570796</td><td>0.000000</td><td>1</td></tr>
+</table>
+
+<p>Paso 2. Aplicar la fórmula y calcular error absoluto.</p>
+
+<p>\(I \approx \frac{0.261799}{3}[6.921383] = 0.603951\)</p>
+
+<p>Valor analítico: \(\left[\frac{1}{2}e^{-x}(\sin(x) - \cos(x))\right]_0^{\pi/2} = \frac{1}{2}\left(e^{-\pi/2} + 1\right) = 0.603940\)</p>
+
+<p>Error absoluto: \(E_a = |0.603940 - 0.603951| = 0.000011\).</p>
+
+<h2>Serie 2 - Ejercicio 3. Calcular \(I = \int_1^3 \frac{\ln(x)}{x^2 + 1}\,dx\) con \(n = 8\) y \(n = 16\) subintervalos.</h2>
+
+<p>Paso 1. Tabla y aproximación para \(n = 8\) (\(h = 0.25\)).</p>
+
+<table border="1">
+<tr>
+<th>\(i\)</th>
+<th>\(x_i\)</th>
+<th>\(f(x_i)\)</th>
+<th>Coeficiente</th>
+</tr>
+<tr><td>0</td><td>1.000000</td><td>0.000000</td><td>1</td></tr>
+<tr><td>1</td><td>1.250000</td><td>0.087080</td><td>4</td></tr>
+<tr><td>2</td><td>1.500000</td><td>0.124758</td><td>2</td></tr>
+<tr><td>3</td><td>1.750000</td><td>0.137752</td><td>4</td></tr>
+<tr><td>4</td><td>2.000000</td><td>0.138629</td><td>2</td></tr>
+<tr><td>5</td><td>2.250000</td><td>0.133762</td><td>4</td></tr>
+<tr><td>6</td><td>2.500000</td><td>0.126385</td><td>2</td></tr>
+<tr><td>7</td><td>2.750000</td><td>0.118143</td><td>4</td></tr>
+<tr><td>8</td><td>3.000000</td><td>0.109861</td><td>1</td></tr>
+</table>
+
+<p>\(S_8 = \frac{0.25}{3}[2.796354] = 0.233030\)</p>
+
+<p>Paso 2. Tabla y aproximación para \(n = 16\) (\(h = 0.125\)).</p>
+
+<table border="1">
+<tr>
+<th>\(i\)</th>
+<th>\(x_i\)</th>
+<th>\(f(x_i)\)</th>
+<th>Coeficiente</th>
+</tr>
+<tr><td>0</td><td>1.000000</td><td>0.000000</td><td>1</td></tr>
+<tr><td>1</td><td>1.125000</td><td>0.051987</td><td>4</td></tr>
+<tr><td>2</td><td>1.250000</td><td>0.087080</td><td>2</td></tr>
+<tr><td>3</td><td>1.375000</td><td>0.110167</td><td>4</td></tr>
+<tr><td>4</td><td>1.500000</td><td>0.124758</td><td>2</td></tr>
+<tr><td>5</td><td>1.625000</td><td>0.133358</td><td>4</td></tr>
+<tr><td>6</td><td>1.750000</td><td>0.137752</td><td>2</td></tr>
+<tr><td>7</td><td>1.875000</td><td>0.139207</td><td>4</td></tr>
+<tr><td>8</td><td>2.000000</td><td>0.138629</td><td>2</td></tr>
+<tr><td>9</td><td>2.125000</td><td>0.136661</td><td>4</td></tr>
+<tr><td>10</td><td>2.250000</td><td>0.133762</td><td>2</td></tr>
+<tr><td>11</td><td>2.375000</td><td>0.130259</td><td>4</td></tr>
+<tr><td>12</td><td>2.500000</td><td>0.126385</td><td>2</td></tr>
+<tr><td>13</td><td>2.625000</td><td>0.122307</td><td>4</td></tr>
+<tr><td>14</td><td>2.750000</td><td>0.118143</td><td>2</td></tr>
+<tr><td>15</td><td>2.875000</td><td>0.113975</td><td>4</td></tr>
+<tr><td>16</td><td>3.000000</td><td>0.109861</td><td>1</td></tr>
+</table>
+
+<p>\(S_{16} = \frac{0.125}{3}[5.594570] = 0.233107\)</p>
+
+<p>Diferencia absoluta entre aproximaciones: \(|S_{16} - S_8| = |0.23310710 - 0.23302953| = 0.000078\).</p>
+
+<h2>Serie 2 - Ejercicio 4. Distancia recorrida \(d = \int_0^{10} \left(5 + 2t^2 e^{-0.2t}\right)\,dt\) con \(n = 10\) y \(n = 20\).</h2>
+
+<p>Paso 1. Calcular para \(n = 10\) (\(h = 1.0\text{ s}\)).</p>
+
+<table border="1">
+<tr>
+<th>\(i\)</th>
+<th>\(t_i\) (s)</th>
+<th>\(v(t_i)\) (m/s)</th>
+<th>Coeficiente</th>
+</tr>
+<tr><td>0</td><td>0.0</td><td>5.000000</td><td>1</td></tr>
+<tr><td>1</td><td>1.0</td><td>6.637462</td><td>4</td></tr>
+<tr><td>2</td><td>2.0</td><td>10.362560</td><td>2</td></tr>
+<tr><td>3</td><td>3.0</td><td>14.878609</td><td>4</td></tr>
+<tr><td>4</td><td>4.0</td><td>19.378527</td><td>2</td></tr>
+<tr><td>5</td><td>5.0</td><td>23.393972</td><td>4</td></tr>
+<tr><td>6</td><td>6.0</td><td>26.685983</td><td>2</td></tr>
+<tr><td>7</td><td>7.0</td><td>29.166502</td><td>4</td></tr>
+<tr><td>8</td><td>8.0</td><td>30.842754</td><td>2</td></tr>
+<tr><td>9</td><td>9.0</td><td>31.778420</td><td>4</td></tr>
+<tr><td>10</td><td>10.0</td><td>32.067057</td><td>1</td></tr>
+</table>
+
+<p>\(d_{10} = \frac{1.0}{3}[635.026570] = 211.675523\text{ m}\)</p>
+
+<p>Paso 2. Calcular para \(n = 20\) (\(h = 0.5\text{ s}\)).</p>
+
+<p>\(d_{20} = \frac{0.5}{3}[37.067057 + 4(211.653780) + 2(208.146958)] = \frac{0.5}{3}[1269.976094] = 211.662682\text{ m}\)</p>
+
+<p>Diferencia absoluta: \(|d_{20} - d_{10}| = |211.662682 - 211.675523| = 0.012841\text{ m}\).</p>
+
+<p>Significado físico: La integral definida de la velocidad \(v(t)\) en el intervalo \([0, 10]\) representa la distancia total recorrida por el vehículo autónomo durante los primeros 10 segundos (\(\approx 211.66\text{ m}\)).</p>
+
+<h2>Serie 2 - Ejercicio 5. Calcular \(I = \int_0^2 e^{-x^2}\,dx\) con \(n = 4, 8\) y \(16\) subintervalos.</h2>
+
+<table border="1">
+<tr>
+<th>\(n\)</th>
+<th>\(h\)</th>
+<th>Aproximación \(S_n\)</th>
+<th>Error estimado \(\frac{|S_{2n} - S_n|}{15}\)</th>
+</tr>
+<tr><td>4</td><td>0.500000</td><td>0.881812</td><td>0.000017</td></tr>
+<tr><td>8</td><td>0.250000</td><td>0.882066</td><td>0.000001</td></tr>
+<tr><td>16</td><td>0.125000</td><td>0.882081</td><td>—</td></tr>
+</table>
+
+<p>Análisis: Al duplicar \(n\) se divide \(h\) entre 2, y el error disminuye aproximadamente por un factor de 16 (\(2^4 = 16\)) porque el error global de Simpson 1/3 es de orden \(O(h^4)\) para funciones suaves con cuarta derivada continua.</p>
+
+<h2>Serie 3 - Ejercicio 1. Calcular \(I = \int_0^3 (x^4 - 2x^2 + 5)\,dx\) con \(n = 6\) subintervalos.</h2>
+
+<p>Paso 1. Determinar \(h = \frac{3 - 0}{6} = 0.5\).</p>
+
+<table border="1">
+<tr>
+<th>\(i\)</th>
+<th>\(x_i\)</th>
+<th>\(f(x_i)\)</th>
+<th>Coeficiente</th>
+</tr>
+<tr><td>0</td><td>0.0</td><td>5.000000</td><td>1</td></tr>
+<tr><td>1</td><td>0.5</td><td>4.562500</td><td>4</td></tr>
+<tr><td>2</td><td>1.0</td><td>4.000000</td><td>2</td></tr>
+<tr><td>3</td><td>1.5</td><td>5.562500</td><td>4</td></tr>
+<tr><td>4</td><td>2.0</td><td>13.000000</td><td>2</td></tr>
+<tr><td>5</td><td>2.5</td><td>31.562500</td><td>4</td></tr>
+<tr><td>6</td><td>3.0</td><td>68.000000</td><td>1</td></tr>
+</table>
+
+<p>Paso 2. Aplicar Simpson 1/3 y comparar con el valor exacto.</p>
+
+<p>\(I \approx \frac{0.5}{3}[273.750000] = 45.625000\)</p>
+
+<p>Valor exacto: \(\left[\frac{x^5}{5} - \frac{2x^3}{3} + 5x\right]_0^3 = 45.600000\)</p>
+
+<p>Error absoluto: \(E_a = 0.025000\); Error relativo porcentual: \(E_r = 0.054825\%\).</p>
+
+<h2>Serie 3 - Ejercicio 2. Calcular \(I = \int_0^\pi \sin(x)e^{-x/2}\,dx\) en radianes con \(n = 8\) subintervalos.</h2>
+
+<p>Paso 1. Calcular \(h = \frac{\pi - 0}{8} = \frac{\pi}{8} = 0.392699\).</p>
+
+<table border="1">
+<tr>
+<th>\(i\)</th>
+<th>\(x_i\) (rad)</th>
+<th>\(f(x_i) = \sin(x_i)e^{-x_i/2}\)</th>
+<th>Coeficiente</th>
+</tr>
+<tr><td>0</td><td>0.000000</td><td>0.000000</td><td>1</td></tr>
+<tr><td>1</td><td>0.392699</td><td>0.314465</td><td>4</td></tr>
+<tr><td>2</td><td>0.785398</td><td>0.477416</td><td>2</td></tr>
+<tr><td>3</td><td>1.178097</td><td>0.512686</td><td>4</td></tr>
+<tr><td>4</td><td>1.570796</td><td>0.455938</td><td>2</td></tr>
+<tr><td>5</td><td>1.963495</td><td>0.346142</td><td>4</td></tr>
+<tr><td>6</td><td>2.356194</td><td>0.217699</td><td>2</td></tr>
+<tr><td>7</td><td>2.748894</td><td>0.096815</td><td>4</td></tr>
+<tr><td>8</td><td>3.141593</td><td>0.000000</td><td>1</td></tr>
+</table>
+
+<p>Paso 2. Aplicar Simpson 1/3 y calcular errores.</p>
+
+<p>\(I \approx \frac{0.392699}{3}[7.382539] = 0.966434\)</p>
+
+<p>Valor exacto: \(0.8\left(e^{-\pi/2} + 1\right) = 0.966304\)</p>
+
+<p>Error absoluto: \(E_a = 0.000131\); Error relativo porcentual: \(E_r = 0.013523\%\).</p>
+
+<h2>Serie 3 - Ejercicio 3. Calcular \(I = \int_1^4 \frac{x^2 + 1}{x^3 + 2}\,dx\) con \(n = 6\) y \(n = 12\) subintervalos.</h2>
+
+<p>Paso 1. Tabla para \(n = 6\) (\(h = 0.5\)).</p>
+
+<table border="1">
+<tr>
+<th>\(i\)</th>
+<th>\(x_i\)</th>
+<th>\(f(x_i)\)</th>
+<th>Coeficiente</th>
+</tr>
+<tr><td>0</td><td>1.00</td><td>0.666667</td><td>1</td></tr>
+<tr><td>1</td><td>1.50</td><td>0.604651</td><td>4</td></tr>
+<tr><td>2</td><td>2.00</td><td>0.500000</td><td>2</td></tr>
+<tr><td>3</td><td>2.50</td><td>0.411348</td><td>4</td></tr>
+<tr><td>4</td><td>3.00</td><td>0.344828</td><td>2</td></tr>
+<tr><td>5</td><td>3.50</td><td>0.295265</td><td>4</td></tr>
+<tr><td>6</td><td>4.00</td><td>0.257576</td><td>1</td></tr>
+</table>
+
+<p>\(S_6 = \frac{0.5}{3}[7.858951] = 1.309825\)</p>
+
+<p>Paso 2. Tabla comparativa y cálculo para \(n = 12\) (\(h = 0.25\)).</p>
+
+<table border="1">
+<tr>
+<th>\(i\)</th>
+<th>\(x_i\)</th>
+<th>\(f(x_i)\)</th>
+<th>Coeficiente</th>
+</tr>
+<tr><td>0</td><td>1.00</td><td>0.666667</td><td>1</td></tr>
+<tr><td>1</td><td>1.25</td><td>0.648221</td><td>4</td></tr>
+<tr><td>2</td><td>1.50</td><td>0.604651</td><td>2</td></tr>
+<tr><td>3</td><td>1.75</td><td>0.552017</td><td>4</td></tr>
+<tr><td>4</td><td>2.00</td><td>0.500000</td><td>2</td></tr>
+<tr><td>5</td><td>2.25</td><td>0.452742</td><td>4</td></tr>
+<tr><td>6</td><td>2.50</td><td>0.411348</td><td>2</td></tr>
+<tr><td>7</td><td>2.75</td><td>0.375600</td><td>4</td></tr>
+<tr><td>8</td><td>3.00</td><td>0.344828</td><td>2</td></tr>
+<tr><td>9</td><td>3.25</td><td>0.318280</td><td>4</td></tr>
+<tr><td>10</td><td>3.50</td><td>0.295265</td><td>2</td></tr>
+<tr><td>11</td><td>3.75</td><td>0.275193</td><td>4</td></tr>
+<tr><td>12</td><td>4.00</td><td>0.257576</td><td>1</td></tr>
+</table>
+
+<p>\(S_{12} = \frac{0.25}{3}[15.724631] = 1.310386\)</p>
+
+<p>Diferencia absoluta: \(|S_{12} - S_6| = 0.000561\); Valor exacto: \(1.310810\).</p>
+
+<p>Resultado: La aproximación con \(n = 12\) (\(1.310386\), error \(0.000424\)) tiene menor error que con \(n = 6\) (\(1.309825\), error \(0.000985\)).</p>
+
+<h2>Serie 3 - Ejercicio 4. Energía consumida \(E = \int_0^6 \left(120 + 30\sin\left(\frac{\pi t}{6}\right) + 5t^2\right)\,dt\) con \(n = 12\) subintervalos.</h2>
+
+<p>Paso 1. Calcular \(h = \frac{6 - 0}{12} = 0.5\text{ h}\).</p>
+
+<table border="1">
+<tr>
+<th>\(i\)</th>
+<th>\(t_i\) (h)</th>
+<th>\(P(t_i)\) (W)</th>
+<th>Coeficiente</th>
+</tr>
+<tr><td>0</td><td>0.0</td><td>120.000000</td><td>1</td></tr>
+<tr><td>1</td><td>0.5</td><td>129.014571</td><td>4</td></tr>
+<tr><td>2</td><td>1.0</td><td>140.000000</td><td>2</td></tr>
+<tr><td>3</td><td>1.5</td><td>152.463203</td><td>4</td></tr>
+<tr><td>4</td><td>2.0</td><td>165.980762</td><td>2</td></tr>
+<tr><td>5</td><td>2.5</td><td>180.227775</td><td>4</td></tr>
+<tr><td>6</td><td>3.0</td><td>195.000000</td><td>2</td></tr>
+<tr><td>7</td><td>3.5</td><td>210.227775</td><td>4</td></tr>
+<tr><td>8</td><td>4.0</td><td>225.980762</td><td>2</td></tr>
+<tr><td>9</td><td>4.5</td><td>242.463203</td><td>4</td></tr>
+<tr><td>10</td><td>5.0</td><td>260.000000</td><td>2</td></tr>
+<tr><td>11</td><td>5.5</td><td>279.014571</td><td>4</td></tr>
+<tr><td>12</td><td>6.0</td><td>300.000000</td><td>1</td></tr>
+</table>
+
+<p>Paso 2. Aplicar Simpson 1/3, expresar en Wh y kWh, y calcular error.</p>
+
+<p>\(E \approx \frac{0.5}{3}[7167.567445] = 1194.594574\text{ Wh} = 1.194595\text{ kWh}\)</p>
+
+<p>Valor exacto: \(\left[120t - \frac{180}{\pi}\cos\left(\frac{\pi t}{6}\right) + \frac{5}{3}t^3\right]_0^6 = 1080 + \frac{360}{\pi} = 1194.591559\text{ Wh} = 1.194592\text{ kWh}\)</p>
+
+<p>Error relativo porcentual: \(E_r = 0.000252\%\).</p>
+
+<h2>Serie 3 - Ejercicio 5. Análisis de precisión y convergencia de \(I = \int_0^2 \frac{e^{-x^2}}{1 + x^2}\,dx\) con \(n = 4, 8, 16\) y \(32\).</h2>
+
+<table border="1">
+<tr>
+<th>\(n\)</th>
+<th>\(h\)</th>
+<th>Aproximación \(S_n\)</th>
+<th>Diferencia \(|S_n - S_{\text{anterior}}|\)</th>
+<th>Error estimado \(\frac{|S_{2n} - S_n|}{15}\)</th>
+</tr>
+<tr><td>4</td><td>0.500000</td><td>0.665571</td><td>—</td><td>0.000356</td></tr>
+<tr><td>8</td><td>0.250000</td><td>0.670916</td><td>0.005345</td><td>0.000006</td></tr>
+<tr><td>16</td><td>0.125000</td><td>0.671006</td><td>0.000090</td><td>0.0000004</td></tr>
+<tr><td>32</td><td>0.062500</td><td>0.671012</td><td>0.000006</td><td>—</td></tr>
+</table>
+
+<p>Análisis: Las aproximaciones convergen hacia \(\approx 0.671012\). Al reducir \(h\) a la mitad, el error estimado disminuye aproximadamente 16 veces debido al orden \(O(h^4)\) de la regla compuesta de Simpson 1/3.</p>
+
+<h3>La regla compuesta de Simpson 1/3 aproxima integrales definidas con un número par de subintervalos mediante parábolas y mejora su precisión conforme se reduce el tamaño de paso \(h\).</h3>
+
+</body>
+</html>
