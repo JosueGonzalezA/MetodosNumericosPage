@@ -640,72 +640,84 @@ function dibujarGraficaNewton(resultado) {
     Object.entries(atributos).forEach(([clave, valor]) => nodo.setAttribute(clave, String(valor)));
     return nodo;
   };
-  const ancho = 500;
-  const alto = 280;
-  const margenIzquierdo = 48;
+  const ancho = 640;
+  const alto = 350;
+  const margenIzquierdo = 58;
   const margenDerecho = 20;
-  const margenSuperior = 20;
-  const margenInferior = 32;
+  const margenSuperior = 22;
+  const margenInferior = 48;
   const valores = resultado.filas.map(fila => fila[1]);
-  const xMinimo = Math.min(resultado.valorInicial - 2.5, ...valores) - 0.01;
-  const xMaximo = Math.max(resultado.valorInicial + 0.5, ...valores) + 0.01;
-  const limiteY = Math.max(1.5, Math.abs(resultado.evaluar(resultado.valorInicial)) * 1.5);
+  const xBaseMinimo = Math.min(resultado.valorInicial, ...valores);
+  const xBaseMaximo = Math.max(resultado.valorInicial, ...valores);
+  const margenX = Math.max((xBaseMaximo - xBaseMinimo) * 0.35, 0.5);
+  const xMinimo = xBaseMinimo - margenX;
+  const xMaximo = xBaseMaximo + margenX;
   const derecha = ancho - margenDerecho;
   const abajo = alto - margenInferior;
   const aPixelX = x => margenIzquierdo + (x - xMinimo) / (xMaximo - xMinimo) * (derecha - margenIzquierdo);
-  const aPixelY = y => margenSuperior + (limiteY - y) / (2 * limiteY) * (abajo - margenSuperior);
-  const grafica = crearElemento("svg", { viewBox: `0 0 ${ancho} ${alto}`, width: ancho, height: alto, role: "img", "aria-label": "Gráfica de f(x) con cuadrícula, números y raíz aproximada" });
-
-  function pasoCuadricula(rango) {
-    const aproximado = rango / 8;
-    const potencia = Math.pow(10, Math.floor(Math.log10(aproximado)));
-    const parte = aproximado / potencia;
-    return (parte <= 1 ? 1 : parte <= 2 ? 2 : parte <= 5 ? 5 : 10) * potencia;
-  }
-
-  const pasoX = pasoCuadricula(xMaximo - xMinimo);
-  const pasoY = pasoCuadricula(2 * limiteY);
-  for (let indiceLinea = Math.ceil(xMinimo / pasoX); indiceLinea <= Math.floor(xMaximo / pasoX); indiceLinea++) {
-    const valor = indiceLinea * pasoX;
-    const x = aPixelX(valor);
-    grafica.append(crearElemento("line", { x1: x, y1: margenSuperior, x2: x, y2: abajo, stroke: "#cccccc" }));
-    const numero = crearElemento("text", { x, y: alto - 8, "text-anchor": "middle", "font-size": 11 });
-    numero.textContent = mostrarNumero(valor);
-    grafica.append(numero);
-  }
-  for (let indiceLinea = Math.ceil(-limiteY / pasoY); indiceLinea <= Math.floor(limiteY / pasoY); indiceLinea++) {
-    const valor = indiceLinea * pasoY;
-    const y = aPixelY(valor);
-    grafica.append(crearElemento("line", { x1: margenIzquierdo, y1: y, x2: derecha, y2: y, stroke: "#cccccc" }));
-    const numero = crearElemento("text", { x: margenIzquierdo - 6, y: y + 4, "text-anchor": "end", "font-size": 11 });
-    numero.textContent = mostrarNumero(valor);
-    grafica.append(numero);
-  }
-
-  grafica.append(crearElemento("line", { x1: margenIzquierdo, y1: abajo, x2: derecha, y2: abajo, stroke: "black" }));
-  grafica.append(crearElemento("line", { x1: margenIzquierdo, y1: margenSuperior, x2: margenIzquierdo, y2: abajo, stroke: "black" }));
-  if (xMinimo <= 0 && xMaximo >= 0) grafica.append(crearElemento("line", { x1: aPixelX(0), y1: margenSuperior, x2: aPixelX(0), y2: abajo, stroke: "black" }));
-  grafica.append(crearElemento("line", { x1: margenIzquierdo, y1: aPixelY(0), x2: derecha, y2: aPixelY(0), stroke: "black" }));
-  let trazo = "";
-  let dibujando = false;
-  for (let indicePunto = 0; indicePunto <= 500; indicePunto++) {
-    const x = xMinimo + indicePunto / 500 * (xMaximo - xMinimo);
+  const muestras = [];
+  const valoresY = [];
+  for (let indice = 0; indice <= 500; indice++) {
+    const x = xMinimo + indice / 500 * (xMaximo - xMinimo);
     try {
       const y = resultado.evaluar(x);
-      if (Math.abs(y) > limiteY) { dibujando = false; continue; }
-      trazo += `${dibujando ? "L" : "M"}${aPixelX(x).toFixed(2)},${aPixelY(y).toFixed(2)} `;
-      dibujando = true;
-    } catch { dibujando = false; }
+      muestras.push({ x, y });
+      valoresY.push(y);
+    } catch { muestras.push(null); }
   }
-  grafica.append(crearElemento("path", { d: trazo, fill: "none", stroke: "black", "stroke-width": 2 }));
-  grafica.append(crearElemento("circle", { cx: aPixelX(resultado.raiz), cy: aPixelY(resultado.evaluar(resultado.raiz)), r: 4, fill: "black" }));
-  const etiquetaX = crearElemento("text", { x: derecha - 8, y: abajo - 6 });
+  const yRaiz = resultado.evaluar(resultado.raiz);
+  valoresY.push(yRaiz, resultado.evaluar(resultado.valorInicial));
+  const yBaseMinimo = Math.min(...valoresY);
+  const yBaseMaximo = Math.max(...valoresY);
+  const margenY = Math.max((yBaseMaximo - yBaseMinimo) * 0.12, 0.1);
+  const yMinimo = yBaseMinimo - margenY;
+  const yMaximo = yBaseMaximo + margenY;
+  const aPixelY = y => abajo - (y - yMinimo) / (yMaximo - yMinimo) * (abajo - margenSuperior);
+  const grafica = crearElemento("svg", {
+    viewBox: `0 0 ${ancho} ${alto}`, role: "img",
+    "aria-label": "Gráfica de f(x) con cuadrícula, iteraciones y raíz aproximada",
+    class: "grafica-interpolacion"
+  });
+  grafica.append(crearElemento("rect", { x: 0, y: 0, width: ancho, height: alto, fill: "#fff" }));
+  for (let indice = 0; indice <= 6; indice++) {
+    const valor = xMinimo + (xMaximo - xMinimo) * indice / 6;
+    const x = aPixelX(valor);
+    grafica.append(crearElemento("line", { x1: x, y1: margenSuperior, x2: x, y2: abajo, stroke: "#dce3e9" }));
+    const numero = crearElemento("text", { x, y: abajo + 19, "text-anchor": "middle", fill: "#263447", "font-size": 11 });
+    numero.textContent = mostrarNumero(valor);
+    grafica.append(numero);
+  }
+  for (let indice = 0; indice <= 5; indice++) {
+    const valor = yMinimo + (yMaximo - yMinimo) * indice / 5;
+    const y = aPixelY(valor);
+    grafica.append(crearElemento("line", { x1: margenIzquierdo, y1: y, x2: derecha, y2: y, stroke: "#dce3e9" }));
+    const numero = crearElemento("text", { x: margenIzquierdo - 7, y: y + 4, "text-anchor": "end", fill: "#263447", "font-size": 11 });
+    numero.textContent = mostrarNumero(valor);
+    grafica.append(numero);
+  }
+  if (xMinimo <= 0 && xMaximo >= 0) grafica.append(crearElemento("line", { x1: aPixelX(0), y1: margenSuperior, x2: aPixelX(0), y2: abajo, stroke: "#6a7889" }));
+  if (yMinimo <= 0 && yMaximo >= 0) grafica.append(crearElemento("line", { x1: margenIzquierdo, y1: aPixelY(0), x2: derecha, y2: aPixelY(0), stroke: "#6a7889" }));
+  let trazo = "";
+  let dibujando = false;
+  for (const muestra of muestras) {
+    if (!muestra) { dibujando = false; continue; }
+    trazo += `${dibujando ? "L" : "M"}${aPixelX(muestra.x).toFixed(2)},${aPixelY(muestra.y).toFixed(2)} `;
+    dibujando = true;
+  }
+  grafica.append(crearElemento("path", { d: trazo, fill: "none", stroke: "#14538a", "stroke-width": 2.5 }));
+  valores.forEach(x => {
+    try {
+      grafica.append(crearElemento("circle", { cx: aPixelX(x), cy: aPixelY(resultado.evaluar(x)), r: 3.5, fill: "#1f2b3b" }));
+    } catch {}
+  });
+  grafica.append(crearElemento("circle", { cx: aPixelX(resultado.raiz), cy: aPixelY(yRaiz), r: 6, fill: "#b99050", stroke: "#1f2b3b" }));
+  const etiquetaX = crearElemento("text", { x: derecha - 3, y: abajo - 8, "text-anchor": "end", fill: "#263447", "font-size": 12 });
   etiquetaX.textContent = "x";
   grafica.append(etiquetaX);
-  const etiquetaY = crearElemento("text", { x: margenIzquierdo + 5, y: margenSuperior + 13 });
+  const etiquetaY = crearElemento("text", { x: margenIzquierdo + 7, y: margenSuperior + 14, fill: "#263447", "font-size": 12 });
   etiquetaY.textContent = "f(x)";
   grafica.append(etiquetaY);
-  const etiquetaRaiz = crearElemento("text", { x: aPixelX(resultado.raiz) + 7, y: aPixelY(resultado.evaluar(resultado.raiz)) - 7 });
+  const etiquetaRaiz = crearElemento("text", { x: aPixelX(resultado.raiz) + 8, y: aPixelY(yRaiz) - 8, fill: "#263447", "font-size": 11 });
   etiquetaRaiz.textContent = "raíz";
   grafica.append(etiquetaRaiz);
   return grafica;
@@ -714,6 +726,9 @@ function dibujarGraficaNewton(resultado) {
 function leerNumero(formulario, nombre) {
   const campo = formulario.elements.namedItem(nombre);
   if (!campo.value.trim()) throw new Error(`Falta el campo ${nombre}.`);
+  if (!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$/.test(campo.value.trim())) {
+    throw new Error(`El campo ${nombre} debe ser un número decimal finito.`);
+  }
   const valor = Number(campo.value);
   if (!Number.isFinite(valor)) throw new Error(`El campo ${nombre} debe ser un número finito.`);
   return valor;
@@ -741,32 +756,88 @@ if (typeof document !== "undefined") {
   };
   const funciones = new Set(["ln", "log", "exp", "sen", "cos", "tan", "arcsen", "arccos", "arctan"]);
 
-  function insertarEnFuncion(campo, etiqueta, textoElegido = null) {
-    const inicio = campo.selectionStart ?? campo.value.length;
-    const fin = campo.selectionEnd ?? campo.value.length;
-    if (etiqueta === "Limpiar") {
-      campo.value = "";
-      campo.focus();
-      campo.setSelectionRange(0, 0);
-    } else {
-      const seleccionado = campo.value.slice(inicio, fin);
-      const texto = textoElegido ?? inserciones[etiqueta] ?? (funciones.has(etiqueta) ? `${etiqueta}()` : etiqueta);
-      const insercion = texto.includes("()") ? texto.replace("()", `(${seleccionado})`) : texto;
-      campo.setRangeText(insercion, inicio, fin, "end");
-      const posicion = texto.includes("()") && !seleccionado
-        ? inicio + texto.indexOf("()") + 1
-        : inicio + insercion.length;
-      campo.focus();
-      campo.setSelectionRange(posicion, posicion);
-    }
-    campo.dispatchEvent(new Event("input", { bubbles: true }));
-  }
-
   document.querySelectorAll("[data-teclado]").forEach(contenedor => {
     const campo = document.getElementById(contenedor.dataset.teclado);
+    const formulario = contenedor.closest?.("form") ?? campo.form;
+    const posiciones = new WeakMap();
+    let campoActivo = campo;
+
+    function esCampo(entrada) {
+      return entrada?.tagName === "INPUT" && entrada.type === "text" && entrada.form === formulario;
+    }
+
+    function guardarPosicion(entrada) {
+      if (entrada?.selectionStart !== null && entrada?.selectionStart !== undefined) {
+        posiciones.set(entrada, [entrada.selectionStart, entrada.selectionEnd]);
+      }
+    }
+
+    function seleccion(entrada) {
+      const largo = entrada.value.length;
+      const [inicio, fin] = posiciones.get(entrada) ?? [entrada.selectionStart ?? largo, entrada.selectionEnd ?? largo];
+      return [Math.min(inicio, largo), Math.min(fin, largo)];
+    }
+
+    if (formulario) {
+      formulario.addEventListener("focusin", evento => {
+        if (esCampo(evento.target)) {
+          campoActivo = evento.target;
+          guardarPosicion(campoActivo);
+        }
+      });
+      for (const tipo of ["click", "keyup", "select", "input"]) {
+        formulario.addEventListener(tipo, evento => {
+          if (esCampo(evento.target)) {
+            campoActivo = evento.target;
+            guardarPosicion(campoActivo);
+          }
+        });
+      }
+    }
+
+    function insertar(etiqueta, textoElegido = null) {
+      const numerico = /^\d$/.test(etiqueta) || etiqueta === "." || etiqueta === "−" || etiqueta === "Limpiar";
+      const destino = numerico && esCampo(campoActivo) ? campoActivo : campo;
+      const [inicio, fin] = seleccion(destino);
+      destino.focus();
+
+      if (etiqueta === "Limpiar") {
+        destino.value = "";
+        destino.setSelectionRange(0, 0);
+      } else if (destino !== campo && etiqueta === "−") {
+        const negativo = destino.value.startsWith("-");
+        destino.value = negativo ? destino.value.slice(1) : `-${destino.value}`;
+        const mover = posicion => Math.max(0, posicion + (negativo ? -1 : 1));
+        destino.setSelectionRange(mover(inicio), mover(fin));
+      } else if (destino !== campo && etiqueta === ".") {
+        const restante = destino.value.slice(0, inicio) + destino.value.slice(fin);
+        const exponente = restante.search(/[eE]/);
+        if (restante.slice(0, exponente < 0 ? undefined : exponente).includes(".") || (exponente >= 0 && inicio > exponente)) {
+          destino.setSelectionRange(inicio, fin);
+          guardarPosicion(destino);
+          return;
+        }
+        if (restante === "" || restante === "-") {
+          destino.value = restante === "-" ? "-0." : "0.";
+          destino.setSelectionRange(destino.value.length, destino.value.length);
+        } else destino.setRangeText(".", inicio, fin, "end");
+      } else {
+        const seleccionado = destino.value.slice(inicio, fin);
+        const texto = textoElegido ?? inserciones[etiqueta] ?? (funciones.has(etiqueta) ? `${etiqueta}()` : etiqueta);
+        const insercion = texto.includes("()") ? texto.replace("()", `(${seleccionado})`) : texto;
+        destino.setRangeText(insercion, inicio, fin, "end");
+        const posicion = texto.includes("()") && !seleccionado
+          ? inicio + texto.indexOf("()") + 1
+          : inicio + insercion.length;
+        destino.setSelectionRange(posicion, posicion);
+      }
+      guardarPosicion(destino);
+      destino.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+
     campo.setSelectionRange(campo.value.length, campo.value.length);
     contenedor.setAttribute("role", "group");
-    contenedor.setAttribute("aria-label", `Botones para ${campo.labels[0].textContent}`);
+    contenedor.setAttribute("aria-label", "Teclado para f(x) y campos numéricos");
     const tabla = document.createElement("table");
     tabla.setAttribute("align", "center");
     const cuerpo = document.createElement("tbody");
@@ -776,9 +847,8 @@ if (typeof document !== "undefined") {
     const etiquetaIndice = document.createElement("label");
     etiquetaIndice.textContent = "Índice n: ";
     const campoIndice = document.createElement("input");
-    campoIndice.type = "number";
-    campoIndice.min = "1";
-    campoIndice.step = "1";
+    campoIndice.type = "text";
+    campoIndice.inputMode = "numeric";
     campoIndice.value = "4";
     etiquetaIndice.append(campoIndice);
     const botonInsertar = document.createElement("button");
@@ -797,6 +867,7 @@ if (typeof document !== "undefined") {
       aviso.textContent = "";
       campo.focus();
       campo.setSelectionRange(...seleccionRaiz);
+      guardarPosicion(campo);
     }
 
     function confirmarRaiz() {
@@ -808,7 +879,7 @@ if (typeof document !== "undefined") {
         return;
       }
       cerrarRaiz();
-      insertarEnFuncion(campo, "raíz n", `raiz${indice}()`);
+      insertar("raíz n", `raiz${indice}()`);
     }
 
     botonInsertar.addEventListener("click", confirmarRaiz);
@@ -828,14 +899,18 @@ if (typeof document !== "undefined") {
         boton.type = "button";
         boton.textContent = etiqueta;
         if (etiqueta === "raíz n") {
+          boton.addEventListener("pointerdown", () => guardarPosicion(campoActivo));
+          boton.addEventListener("mousedown", evento => evento.preventDefault());
           boton.addEventListener("click", () => {
-            seleccionRaiz = [campo.selectionStart ?? campo.value.length, campo.selectionEnd ?? campo.value.length];
+            seleccionRaiz = seleccion(campo);
             aviso.textContent = "";
             panelRaiz.hidden = false;
             campoIndice.focus();
           });
         } else {
-          boton.addEventListener("click", () => insertarEnFuncion(campo, etiqueta));
+          boton.addEventListener("pointerdown", () => guardarPosicion(campoActivo));
+          boton.addEventListener("mousedown", evento => evento.preventDefault());
+          boton.addEventListener("click", () => insertar(etiqueta));
         }
         celda.append(boton, document.createTextNode(" "));
       }
@@ -876,7 +951,7 @@ if (typeof document !== "undefined") {
     try {
       if (!campoInicialPuntoFijo.value.trim()) throw new Error("Escribe un valor inicial.");
       const funcionOriginal = leerFuncion(campoFuncionPuntoFijo.value);
-      const valorInicial = Number(campoInicialPuntoFijo.value);
+      const valorInicial = leerNumero(document.getElementById("form-punto-fijo"), "x0");
       const formas = crearFormasPuntoFijo(funcionOriginal, valorInicial, campoFuncionPuntoFijo.value.trim());
       formas.forEach(forma => {
         const linea = document.createElement("p");
