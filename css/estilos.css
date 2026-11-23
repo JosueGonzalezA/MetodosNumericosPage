@@ -403,3 +403,72 @@ main.newton-raphson > img {
 
 
 }
+
+.formulario .puntos-polinomiales,
+.formulario .controles-puntos {
+  grid-column: 1 / -1;
+}
+
+.puntos-polinomiales {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.fila-punto {
+  display: grid;
+  grid-template-columns: 6rem repeat(2, minmax(0, 1fr));
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  background: var(--tarjetas-oscuras);
+}
+
+.fila-punto label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.controles-puntos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.controles-puntos button {
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--botones);
+  border-radius: 8px;
+  background: var(--tarjetas-oscuras);
+  color: var(--texto);
+  font: inherit;
+  cursor: pointer;
+}
+
+.controles-puntos button:hover,
+.controles-puntos button:focus-visible {
+  background: var(--botones);
+}
+
+.grafica-interpolacion {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin-top: 1rem;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  background: #fff;
+}
+
+@media (max-width: 700px) {
+  .fila-punto {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .etiqueta-punto {
+    grid-column: 1 / -1;
+  }
+}
