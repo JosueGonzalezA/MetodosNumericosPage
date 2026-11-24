@@ -22,14 +22,15 @@
   display: none !important;
 }
 
+
 body {
-  color: var(--texto);
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 1rem;
-  padding-bottom: 5rem;
-  background: var(--fondoprincipal);
-}
+            color: var(--texto);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 1rem;
+            padding-bottom: 5rem;
+            background: var(--fondoprincipal);
+        }
 
 header {
   padding: 1.5rem;
@@ -38,6 +39,8 @@ header {
   border-radius: 0.75rem;
   border: 1px solid var(--borde);
 }
+
+
 
 nav {
   display: flex;
@@ -104,34 +107,95 @@ main.newton-raphson > img {
   object-fit: contain;
 }
 
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
 
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
-
-        body {
-            color: var(--texto);
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 1rem;
-            background: var(--fondoprincipal);
-        }
+        
 
 .history ul {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  max-width: calc((250px * 3) + (15px * 2));
+  grid-auto-flow: column;                    
+  grid-auto-columns: minmax(min(440px, 85vw), 520px);  
   gap: 1.5rem;
+  margin: 0;
+  padding: 1.5rem 1.5rem 2rem;        
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  scrollbar-color: var(--botones) var(--tarjetas-oscuras);
+}
+
+.history li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  scroll-snap-align: start;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.history img {
+  width: 100%;
+  height: auto;       
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+
+
+
+  .history li:hover img {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  }
+
+
+
+#inicio p {
+  max-width: 70ch;
+  line-height: 1.75;
+}
+
+
+.mision-vision {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.mv-tarjeta {
+  background: var(--tarjetas);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+}
+
+.mv-tarjeta > :first-child {
+  margin-top: 0;
+}
+
+.mv-tarjeta > :last-child {
+  margin-bottom: 0;
+}
+
+
+.necesidades {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0 1.5rem;
   padding: 0;
   list-style: none;
 }
 
-
-.history img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border-radius: 6px;
+.necesidades li {
+  background: var(--tarjetas);
+  border: 1px solid var(--borde);
+  border-left: 3px solid var(--botones);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
 }
 
 .site-logo {
@@ -140,9 +204,133 @@ main.newton-raphson > img {
   object-fit: contain;
 }
 
+.contenido {
+  margin-top: 1.5rem;
+  padding: 1.5rem 2rem 2rem;
+  background: var(--fondoprincipal);
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+}
 
-#inicio,
-#newton-raphson {
+.contenido p,
+.contenido li {
+  max-width: 75ch;
+  line-height: 1.75;
+}
+
+.contenido > :first-child,
+.contenido > section > :first-child {
+  margin-top: 0;
+}
+
+
+.contenido h1 {
+  margin: 0 0 1.25rem;
+  font-size: 2rem;
+  line-height: 1.25;
+  border-bottom: 4px solid var(--botones);
+  
+}
+
+
+.contenido h2 {
+  margin: 2.5rem 0 1rem;
+  padding: 0.65rem 1rem;
+  font-size: 1.2rem;
+  line-height: 1.4;
+  background: var(--tarjetas);
+  border-left: 4px solid var(--botones);
+  border-radius: 0 10px 10px 0;
+}
+
+.contenido h3 {
+  margin: 1.75rem 0 0.75rem;
+  font-size: 1.1rem;
+  color: var(--botones);
+}
+
+.contenido h4 {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 1rem;
+  font-style: italic;
+}
+
+.contenido ol,
+.contenido ul {
+  padding-left: 1.5rem;
+}
+
+.contenido li {
+  margin-bottom: 0.5rem;
+}
+
+.contenido li::marker {
+  color: var(--botones);
+  font-weight: bold;
+}
+
+.contenido > li {
+  margin-left: 1.5rem;
+}
+
+.contenido li > p,
+.contenido ol > p {
+  margin: 0.6rem 0;
+  padding: 0.5rem 0.9rem;
+  background: var(--tarjetas-oscuras);
+  border-left: 3px solid var(--borde);
+  border-radius: 0 8px 8px 0;
+  overflow-x: auto;
+}
+
+
+.contenido table {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: 1rem 0 1.5rem;
+  overflow-x: auto;
+  border: 0;
+  border-collapse: collapse;
+}
+
+.contenido th,
+.contenido td {
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--borde);
+  text-align: center;
+}
+
+.contenido th {
+  background: var(--fondosecundario);
+  border-bottom: 2px solid var(--botones);
+}
+
+.contenido td {
+  background: var(--tarjetas-oscuras);
+}
+
+.contenido tr:nth-child(even) td {
+  background: var(--tarjetas);
+}
+
+.contenido img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  margin: 1rem 0;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+}
+
+.contenido a {
+  color: var(--botones);
+}
+
+
+#inicio
+ {
   background: var(--fondoprincipal);
   border: 1px solid var(--borde);
   border-radius: 14px;
@@ -224,7 +412,13 @@ main.newton-raphson > img {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
+  justify-content: center;
+  padding: 0.75rem;
+  background: var(--fondosecundario);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
 }
+
 
 .teclado button {
   padding: 0.4rem 0.75rem;
@@ -243,6 +437,61 @@ main.newton-raphson > img {
 
 .teclado button:focus-visible {
   outline: 3px solid var(--botones);
+}
+
+.teclado table {
+  max-width: 100%;
+}
+
+.teclado td {
+  white-space: normal;
+}
+.resultado caption {
+  padding-bottom: 0.5rem;
+  color: var(--botones);
+  font-weight: bold;
+}
+
+.resultado h3 {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  font-size: 1.05rem;
+  background: var(--tarjetas-oscuras);
+  border-left: 4px solid var(--botones);
+  border-radius: 0 8px 8px 0;
+}
+
+.resultado svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-top: 1rem;
+  border-radius: 8px;
+}
+
+
+
+header + .descripcion {
+  margin-top: 1.25rem;
+}
+
+.calculadora h2 {
+  margin-top: 0;
+}
+
+
+
+button.navegacion_calculadoras[aria-pressed="true"] {
+  background: var(--tarjetas);
+  box-shadow: inset 0 -3px 0 var(--botones);
+}
+
+.formulario {
+  align-items: end;
+}
+
+.formulario .campo {
+  justify-content: flex-end;
 }
 
 
@@ -463,12 +712,69 @@ main.newton-raphson > img {
   background: #fff;
 }
 
+
+
 @media (max-width: 700px) {
-  .fila-punto {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    .mision-vision {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+@media (hover: hover) {
+    .history li:hover {
+      transform: scale(1.06);  
+      position: relative;
+      z-index: 1;
+    }
   }
 
-  .etiqueta-punto {
-    grid-column: 1 / -1;
+
+@media (max-width: 700px) {
+    .fila-punto {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .etiqueta-punto {
+      grid-column: 1 / -1;
+    }
+  }
+
+@media (max-width: 700px) {
+      .contenido {
+        padding: 1rem;
+      }
+
+      .contenido h1 {
+        font-size: 1.5rem;
+      }
+
+      .contenido h2 {
+        font-size: 1.05rem;
+      }
+    }
+  }
+
+@media (max-width: 700px) {
+
+  .selector-calculadoras {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--botones) var(--tarjetas-oscuras);
+  }
+
+  .selector-calculadoras button {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .teclado {
+    padding: 0.5rem;
+  }
+
+  .teclado button {
+    min-width: 2.2rem;
+    padding: 0.35rem 0.55rem;
   }
 }

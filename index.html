@@ -13,66 +13,82 @@
         <h2>Universidad Nacional Autónoma de México</h2>
         <img class="logo_unam" src="/Imagenes/inicio/logo_unam.jpeg " alt="Logotipo de la UNAM">
         <h3>By: CMMP + Anexadas</h3>
-        <nav aria-label="Navegación principal">
+        <div> 
+            <nav aria-label="Navegación principal">
             <a class="navegacion" href="/Metodos_numericos/biseccion.html">Bisección</a>
             <a class="navegacion" href="/Metodos_numericos/newton-raphson.html">Newton-Raphson</a>
             <a class="navegacion" href="/Metodos_numericos/secante.html">Punto Fijo</a>
+            <a class="navegacion" href="/Metodos_numericos/regla_de _Simpson 13.html">Simpson 1/3</a>
+            <a class="navegacion" href="/Metodos_numericos/Interpolación-Lineal-de-Lagrange.html">Interpolación</a>
+            <a class="navegacion" href="/Metodos_numericos/taylor.html">Serie de Taylor</a>
             <a class="navegacion" href="/Metodos_numericos/calculadoras/calculadora.html">Calculadoras</a>
         </nav>
+        </div>
+        
     </header>
     <main>
         <section id="inicio">
-    <h1 id="mision"> Mision </h1>
-        <p>Facilitar el aprendizaje de los métodos numéricos mediante una página web educativa que reúna apuntes, 
-            ejemplos y procedimientos explicados paso a paso, para que los estudiantes comprendan y apliquen 
-            métodos como el de bisección y Newton-Raphson de manera clara y práctica</p>
 
-            <h1>Vision</h1>
+    <div class="mision-vision">
+        <article class="mv-tarjeta">
+            <h1 id="mision">Misión</h1>
+            <p>Facilitar el aprendizaje de los métodos numéricos mediante una página web educativa que reúna apuntes,
+                ejemplos y procedimientos explicados paso a paso, para que los estudiantes comprendan y apliquen
+                métodos como el de bisección y Newton-Raphson de manera clara y práctica.</p>
+        </article>
+
+        <article class="mv-tarjeta">
+            <h1>Visión</h1>
             <p>Ser una página web de referencia para estudiantes de métodos numéricos, reconocida por ofrecer
-                 contenido claro, organizado y accesible que facilite el aprendizaje autónomo, fomente el interés 
-                 por las matemáticas y ayude a resolver problemas mediante herramientas numéricas.</p>
+                contenido claro, organizado y accesible que facilite el aprendizaje autónomo, fomente el interés
+                por las matemáticas y ayude a resolver problemas mediante herramientas numéricas.</p>
+        </article>
+    </div>
 
-        <h1 id="conceptos">Introducción</h1>
-        
-        <h2>¿Qué son los métodos numéricos?</h2>
-        <p>
-            Son técnicas que nos permiten encontrar soluciones aproximadas a problemas matemáticos que serían 
-            muy difíciles, o incluso imposibles, de resolver directamente. Cuando las matemáticas exactas se 
-            vuelven demasiado complicadas, los métodos numéricos nos ayudan a encontrar una respuesta 
-            suficientemente cercana.
-        </p>
+    <h1 id="conceptos">Introducción</h1>
 
-        <h2>¿Pero por qué necesitamos aproximaciones?</h2>  
-        <p>Una empresa puede necesitar saber:</p>
-        
-        <ul>
-            <li>¿Cuántos productos fabricar?</li>
-            <li>¿Cómo se distribuirá el calor dentro de una máquina?</li>
-            <li>¿Cuánto peso puede soportar una estructura?</li>
-            <li>¿Cómo se comportará el clima?</li>
-            <li>¿Cómo puede un robot calcular dónde debe moverse?</li>
-        </ul>
-        <p>Resolver estos problemas puede involucrar miles o millones de cálculos.
-           Hacerlos manualmente sería prácticamente imposible.
-            Ahí es donde las computadoras y los métodos numéricos se vuelven una combinación poderosa.
-            Los métodos numéricos no consisten en encontrar una respuesta perfecta. Consisten en encontrar
-             una respuesta lo suficientemente buena, de manera eficiente y sabiendo qué tan confiable es.
-              Y eso es exactamente lo que muchas veces necesitamos en el mundo real. 
-              Porque cuando tienes un problema enorme, **no siempre necesitas una respuesta perfecta.
-               A veces necesitas una respuesta rápida y precisa.
-        </p>
+    <h2>¿Qué son los métodos numéricos?</h2>
+    <p>
+        Son técnicas que nos permiten encontrar soluciones aproximadas a problemas matemáticos que serían
+        muy difíciles, o incluso imposibles, de resolver directamente. Cuando las matemáticas exactas se
+        vuelven demasiado complicadas, los métodos numéricos nos ayudan a encontrar una respuesta
+        suficientemente cercana.
+    </p>
 
-        <h2>Ceros en una funcion</h2>
-        <p>A lo largo de la historia, las matemáticas han evolucionado para resolver problemas relacionados con
-             la naturaleza, la ingeniería, la física y muchas otras áreas. Uno de los problemas más importantes 
-             ha sido encontrar las soluciones de las ecuaciones, es decir, los valores que hacen que una expresión 
-             sea igual a cero. Con el desarrollo del álgebra y el cálculo, los matemáticos crearon diferentes 
-             métodos para encontrar estas soluciones. Sin embargo, muchas ecuaciones no pueden resolverse 
-             fácilmente mediante fórmulas exactas, por lo que surgieron los métodos numéricos, que permiten 
-             obtener soluciones aproximadas con un alto grado de precisión.
+    <h2>¿Pero por qué necesitamos aproximaciones?</h2>
+    <p>Una empresa puede necesitar saber:</p>
 
-            En la actualidad, encontrar los ceros de una función es fundamental para resolver problemas científicos
-             y de ingeniería, y constituye uno de los temas principales de los métodos numéricos. </p>
+    <ul class="necesidades">
+        <li>¿Cuántos productos fabricar?</li>
+        <li>¿Cómo se distribuirá el calor dentro de una máquina?</li>
+        <li>¿Cuánto peso puede soportar una estructura?</li>
+        <li>¿Cómo se comportará el clima?</li>
+        <li>¿Cómo puede un robot calcular dónde debe moverse?</li>
+    </ul>
+
+    <p>Resolver estos problemas puede involucrar miles o millones de cálculos.
+       Hacerlos manualmente sería prácticamente imposible.
+       Ahí es donde las computadoras y los métodos numéricos se vuelven una combinación poderosa.
+       Los métodos numéricos no consisten en encontrar una respuesta perfecta. Consisten en encontrar
+       una respuesta lo suficientemente buena, de manera eficiente y sabiendo qué tan confiable es.
+       Y eso es exactamente lo que muchas veces necesitamos en el mundo real.
+       Porque cuando tienes un problema enorme, **no siempre necesitas una respuesta perfecta.
+       A veces necesitas una respuesta rápida y precisa.
+    </p>
+
+    <h2>Ceros en una función</h2>
+    <p>A lo largo de la historia, las matemáticas han evolucionado para resolver problemas relacionados con
+       la naturaleza, la ingeniería, la física y muchas otras áreas. Uno de los problemas más importantes
+       ha sido encontrar las soluciones de las ecuaciones, es decir, los valores que hacen que una expresión
+       sea igual a cero. Con el desarrollo del álgebra y el cálculo, los matemáticos crearon diferentes
+       métodos para encontrar estas soluciones. Sin embargo, muchas ecuaciones no pueden resolverse
+       fácilmente mediante fórmulas exactas, por lo que surgieron los métodos numéricos, que permiten
+       obtener soluciones aproximadas con un alto grado de precisión.</p>
+
+    <p>En la actualidad, encontrar los ceros de una función es fundamental para resolver problemas científicos
+       y de ingeniería, y constituye uno de los temas principales de los métodos numéricos.</p>
+
+
              <section class="history">
                 <h2>Historia de las matemáticas</h2>
                 <ul>
