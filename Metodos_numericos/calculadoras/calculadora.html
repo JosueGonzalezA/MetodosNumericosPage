@@ -3,9 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Calculadoras de bisección, punto fijo y Newton-Raphson.">
+  <meta name="description" content="Calculadoras de bisección, punto fijo, Newton-Raphson, serie de Taylor, interpolación y regla de Simpson 1/3.">
   <title>Calculadoras de métodos numéricos</title>
   <script src="app.js" defer></script>
+  <script src="metodos-adicionales.js" defer></script>
+  <script src="metodos-adicionales-ui.js" defer></script>
+  <script src="teclados-numericos.js" defer></script>
   <link rel="stylesheet" href="../../css/estilos.css">
   <link rel="stylesheet" href="../../css/boton-arriba.css">
 </head>
@@ -26,6 +29,11 @@
     <button class="navegacion_calculadoras" type="button" data-section="biseccion" aria-pressed="true">Bisección</button>
     <button class="navegacion_calculadoras" type="button" data-section="punto-fijo" aria-pressed="false">Punto fijo</button>
     <button class="navegacion_calculadoras" type="button" data-section="newton" aria-pressed="false">Newton-Raphson</button>
+    <button class="navegacion_calculadoras" type="button" data-section="taylor" aria-pressed="false">Serie de Taylor</button>
+    <button class="navegacion_calculadoras" type="button" data-section="lagrange-lineal" aria-pressed="false">Lagrange lineal</button>
+    <button class="navegacion_calculadoras" type="button" data-section="simpson" aria-pressed="false">Simpson 1/3</button>
+    <button class="navegacion_calculadoras" type="button" data-section="interpolacion-lineal" aria-pressed="false">Interpolación lineal</button>
+    <button class="navegacion_calculadoras" type="button" data-section="interpolacion-polinomial" aria-pressed="false">Interpolación polinomial</button>
   </nav>
 
   <section id="biseccion" class="calculadora" aria-labelledby="titulo-biseccion">
@@ -34,10 +42,10 @@
     <form id="form-biseccion" class="formulario">
       <p class="campo campo-ancho"><label for="b-f">f(x)</label> <input id="b-f" name="funcion" value="e^(3*x) - 4" required></p>
       <div class="teclado" data-teclado="b-f"></div>
-      <p class="campo"><label for="b-a">Extremo izquierdo Xi (opcional)</label> <input id="b-a" name="a" type="number" step="any" placeholder="Automático"></p>
-      <p class="campo"><label for="b-b">Extremo derecho Xf (opcional)</label> <input id="b-b" name="b" type="number" step="any" placeholder="Automático"></p>
-      <p class="campo"><label for="b-tol">Error máximo Ea (%)</label> <input id="b-tol" name="tolerancia" type="number" step="any" min="0" value="1" required></p>
-      <p class="campo"><label for="b-max">Iteraciones máximas</label> <input id="b-max" name="maximo" type="number" step="1" min="1" max="500" value="100" required></p>
+      <p class="campo"><label for="b-a">Extremo izquierdo Xi (opcional)</label> <input id="b-a" name="a" type="text" inputmode="decimal" placeholder="Automático"></p>
+      <p class="campo"><label for="b-b">Extremo derecho Xf (opcional)</label> <input id="b-b" name="b" type="text" inputmode="decimal" placeholder="Automático"></p>
+      <p class="campo"><label for="b-tol">Error máximo Ea (%)</label> <input id="b-tol" name="tolerancia" type="text" inputmode="decimal" value="1" required></p>
+      <p class="campo"><label for="b-max">Iteraciones máximas</label> <input id="b-max" name="maximo" type="text" inputmode="numeric" value="100" required></p>
       <button type="submit">Calcular bisección</button>
     </form>
     <div id="resultado-biseccion" class="resultado" aria-live="polite"></div>
@@ -49,11 +57,11 @@
     <form id="form-punto-fijo" class="formulario">
       <p class="campo campo-ancho"><label for="p-f">f(x)</label> <input id="p-f" name="original" value="2*e^(x^2)-5*x" required></p>
       <div class="teclado" data-teclado="p-f"></div>
-      <p class="campo"><label for="p-x0">Valor inicial (x₀)</label> <input id="p-x0" name="x0" type="number" step="any" value="0" required></p>
+      <p class="campo"><label for="p-x0">Valor inicial (x₀)</label> <input id="p-x0" name="x0" type="text" inputmode="decimal" value="0" required></p>
       <p class="campo"><label for="p-opcion">Forma de g(x)</label> <select id="p-opcion" name="opcion"><option value="auto">Automática</option><option value="1">g₁(x)</option><option value="2">g₂(x)</option><option value="3">g₃(x)</option></select></p>
       <div id="formas-punto-fijo" class="formas" aria-live="polite"></div>
-      <p class="campo"><label for="p-tol">Error máximo Ea (%)</label> <input id="p-tol" name="tolerancia" type="number" step="any" min="0" value="0.01" required></p>
-      <p class="campo"><label for="p-max">Iteraciones máximas</label> <input id="p-max" name="maximo" type="number" step="1" min="1" max="500" value="100" required></p>
+      <p class="campo"><label for="p-tol">Error máximo Ea (%)</label> <input id="p-tol" name="tolerancia" type="text" inputmode="decimal" value="0.01" required></p>
+      <p class="campo"><label for="p-max">Iteraciones máximas</label> <input id="p-max" name="maximo" type="text" inputmode="numeric" value="100" required></p>
       <button type="submit">Calcular punto fijo</button>
     </form>
     <div id="resultado-punto-fijo" class="resultado" aria-live="polite"></div>
@@ -66,12 +74,96 @@
       <p class="campo campo-ancho"><label for="n-f">f(x)</label> <input id="n-f" name="funcion" value="x^5 - x - 1" required></p>
       <div class="teclado" data-teclado="n-f"></div>
       <p id="derivada-newton" class="formas" aria-live="polite"></p>
-      <p class="campo"><label for="n-x0">Valor inicial (x₀)</label> <input id="n-x0" name="x0" type="number" step="any" value="1" required></p>
-      <p class="campo"><label for="n-tol">Error máximo Ea (%)</label> <input id="n-tol" name="tolerancia" type="number" step="any" min="0" value="0.000001" required></p>
-      <p class="campo"><label for="n-max">Iteraciones máximas</label> <input id="n-max" name="maximo" type="number" step="1" min="1" max="500" value="100" required></p>
+      <p class="campo"><label for="n-x0">Valor inicial (x₀)</label> <input id="n-x0" name="x0" type="text" inputmode="decimal" value="1" required></p>
+      <p class="campo"><label for="n-tol">Error máximo Ea (%)</label> <input id="n-tol" name="tolerancia" type="text" inputmode="decimal" value="0.000001" required></p>
+      <p class="campo"><label for="n-max">Iteraciones máximas</label> <input id="n-max" name="maximo" type="text" inputmode="numeric" value="100" required></p>
       <button type="submit">Calcular Newton-Raphson</button>
     </form>
     <div id="resultado-newton" class="resultado" aria-live="polite"></div>
+  </section>
+
+  <section id="taylor" class="calculadora" aria-labelledby="titulo-taylor" hidden>
+    <h2 id="titulo-taylor" tabindex="-1">Serie de Taylor</h2>
+    <p class="descripcion">Calcula las aproximaciones desde el orden 0 hasta el indicado: <code>f(xᵢ + h) ≈ f(xᵢ) + f'(xᵢ)h + f''(xᵢ)h²/2! + ⋯</code>.</p>
+    <form id="form-taylor" class="formulario">
+      <p class="campo campo-ancho"><label for="t-f">f(x)</label> <input id="t-f" name="funcion" value="-0.1*x^4-0.15*x^3-0.5*x^2-0.25*x+1.2" required></p>
+      <div class="teclado" data-teclado="t-f"></div>
+      <p class="campo"><label for="t-centro">Valor inicial (xᵢ, opcional)</label> <input id="t-centro" name="centro" type="text" inputmode="decimal" value="0"></p>
+      <p class="campo"><label for="t-paso">Paso (h, opcional)</label> <input id="t-paso" name="paso" type="text" inputmode="decimal" value="1"></p>
+      <p class="campo"><label for="t-objetivo">Valor final (x, opcional; reemplaza h)</label> <input id="t-objetivo" name="objetivo" type="text" inputmode="decimal"></p>
+      <p class="campo"><label for="t-orden">Orden máximo (opcional)</label> <input id="t-orden" name="orden" type="text" inputmode="numeric" value="3"></p>
+      <p class="campo"><label for="t-tolerancia">Tolerancia absoluta (opcional; orden automático)</label> <input id="t-tolerancia" name="tolerancia" type="text" inputmode="decimal"></p>
+      <button type="submit">Calcular serie de Taylor</button>
+    </form>
+    <div id="resultado-taylor" class="resultado" aria-live="polite"></div>
+  </section>
+
+  <section id="lagrange-lineal" class="calculadora" aria-labelledby="titulo-lagrange-lineal" hidden>
+    <h2 id="titulo-lagrange-lineal" tabindex="-1">Interpolación lineal de Lagrange</h2>
+    <p class="descripcion">Usa dos puntos para estimar <code>f(x)</code> mediante <code>y₀(x − x₁)/(x₀ − x₁) + y₁(x − x₀)/(x₁ − x₀)</code>.</p>
+    <form id="form-lagrange-lineal" class="formulario">
+      <p class="campo"><label for="l-x0">x₀</label> <input id="l-x0" name="x0" type="text" inputmode="decimal" value="0" required></p>
+      <p class="campo"><label for="l-y0">y₀</label> <input id="l-y0" name="y0" type="text" inputmode="decimal" value="0" required></p>
+      <p class="campo"><label for="l-x1">x₁</label> <input id="l-x1" name="x1" type="text" inputmode="decimal" value="1" required></p>
+      <p class="campo"><label for="l-y1">y₁</label> <input id="l-y1" name="y1" type="text" inputmode="decimal" value="1" required></p>
+      <p class="campo"><label for="l-valor">Valor a estimar (x, opcional)</label> <input id="l-valor" name="valor" type="text" inputmode="decimal" value="0.25"></p>
+      <div class="teclado" data-teclado-numerico></div>
+      <button type="submit">Calcular Lagrange lineal</button>
+    </form>
+    <div id="resultado-lagrange-lineal" class="resultado" aria-live="polite"></div>
+  </section>
+
+  <section id="simpson" class="calculadora" aria-labelledby="titulo-simpson" hidden>
+    <h2 id="titulo-simpson" tabindex="-1">Regla de Simpson 1/3</h2>
+    <p class="descripcion">Aproxima la integral entre <code>a</code> y <code>b</code> con un número par de subintervalos. Si conoces el valor exacto, puedes comparar el error.</p>
+    <form id="form-simpson" class="formulario">
+      <p class="campo campo-ancho"><label for="s-f">f(x)</label> <input id="s-f" name="funcion" value="x^4+1" required></p>
+      <div class="teclado" data-teclado="s-f"></div>
+      <p class="campo"><label for="s-a">Límite inferior (a)</label> <input id="s-a" name="a" type="text" inputmode="decimal" value="0" required></p>
+      <p class="campo"><label for="s-b">Límite superior (b)</label> <input id="s-b" name="b" type="text" inputmode="decimal" value="2" required></p>
+      <p class="campo"><label for="s-n">Subintervalos (n, par; inicial si hay tolerancia)</label> <input id="s-n" name="n" type="text" inputmode="numeric" value="4"></p>
+      <p class="campo"><label for="s-tolerancia">Tolerancia absoluta (opcional; n automático)</label> <input id="s-tolerancia" name="tolerancia" type="text" inputmode="decimal"></p>
+      <p class="campo"><label for="s-exacto">Valor exacto (opcional)</label> <input id="s-exacto" name="exacto" type="text" inputmode="decimal" value="8.4"></p>
+      <button type="submit">Calcular Simpson 1/3</button>
+    </form>
+    <div id="resultado-simpson" class="resultado" aria-live="polite"></div>
+  </section>
+
+  <section id="interpolacion-lineal" class="calculadora" aria-labelledby="titulo-interpolacion-lineal" hidden>
+    <h2 id="titulo-interpolacion-lineal" tabindex="-1">Interpolación lineal</h2>
+    <p class="descripcion">Con dos puntos, estima <code>y</code> a partir de <code>x</code>, o <code>x</code> a partir de <code>y</code>, usando la recta que los une.</p>
+    <form id="form-interpolacion-lineal" class="formulario">
+      <p class="campo"><label for="i-x0">x₀</label> <input id="i-x0" name="x0" type="text" inputmode="decimal" value="100" required></p>
+      <p class="campo"><label for="i-y0">y₀</label> <input id="i-y0" name="y0" type="text" inputmode="decimal" value="8.5" required></p>
+      <p class="campo"><label for="i-x1">x₁</label> <input id="i-x1" name="x1" type="text" inputmode="decimal" value="250" required></p>
+      <p class="campo"><label for="i-y1">y₁</label> <input id="i-y1" name="y1" type="text" inputmode="decimal" value="29.8" required></p>
+      <p class="campo"><label for="i-x">Valor de x (opcional)</label> <input id="i-x" name="x" type="text" inputmode="decimal" value="180"></p>
+      <p class="campo"><label for="i-y">Valor de y (opcional)</label> <input id="i-y" name="y" type="text" inputmode="decimal" value="20"></p>
+      <div class="teclado" data-teclado-numerico></div>
+      <button type="submit">Calcular interpolación lineal</button>
+    </form>
+    <div id="resultado-interpolacion-lineal" class="resultado" aria-live="polite"></div>
+  </section>
+
+  <section id="interpolacion-polinomial" class="calculadora" aria-labelledby="titulo-interpolacion-polinomial" hidden>
+    <h2 id="titulo-interpolacion-polinomial" tabindex="-1">Interpolación polinomial</h2>
+    <p class="descripcion">Escribe los puntos conocidos. Puedes indicar el valor de <code>x</code> que quieres estimar. Se construye el polinomio de Lagrange con todos los puntos.</p>
+    <form id="form-interpolacion-polinomial" class="formulario">
+      <div id="puntos-polinomiales" class="puntos-polinomiales">
+        <div class="fila-punto" data-punto><strong class="etiqueta-punto">Punto 1</strong><label>x <input data-x type="text" inputmode="decimal" value="1" required></label><label>y <input data-y type="text" inputmode="decimal" value="2" required></label></div>
+        <div class="fila-punto" data-punto><strong class="etiqueta-punto">Punto 2</strong><label>x <input data-x type="text" inputmode="decimal" value="2" required></label><label>y <input data-y type="text" inputmode="decimal" value="4" required></label></div>
+        <div class="fila-punto" data-punto><strong class="etiqueta-punto">Punto 3</strong><label>x <input data-x type="text" inputmode="decimal" value="4" required></label><label>y <input data-y type="text" inputmode="decimal" value="14" required></label></div>
+        <div class="fila-punto" data-punto><strong class="etiqueta-punto">Punto 4</strong><label>x <input data-x type="text" inputmode="decimal" value="5" required></label><label>y <input data-y type="text" inputmode="decimal" value="22" required></label></div>
+      </div>
+      <div class="controles-puntos">
+        <button id="agregar-punto" type="button">Añadir punto</button>
+        <button id="quitar-punto" type="button">Quitar último punto</button>
+      </div>
+      <p class="campo"><label for="ip-valor">Valor a estimar (x, opcional)</label> <input id="ip-valor" name="valor" type="text" inputmode="decimal" value="3"></p>
+      <div class="teclado" data-teclado-numerico></div>
+      <button type="submit">Calcular interpolación polinomial</button>
+    </form>
+    <div id="resultado-interpolacion-polinomial" class="resultado" aria-live="polite"></div>
   </section>
 </body>
 </html>
