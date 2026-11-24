@@ -328,6 +328,67 @@ main.newton-raphson > img {
   color: var(--botones);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+.contenido h2 {
+  scroll-margin-top: 1rem;
+}
+
+.contenido .indice {
+  margin: 0 0 1.5rem;
+  background: var(--tarjetas);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+}
+
+.contenido .indice summary {
+  padding: 0.75rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.contenido .indice[open] summary {
+  border-bottom: 1px solid var(--borde);
+}
+
+.contenido .indice ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 1rem;
+  list-style: none;
+}
+
+.contenido .indice li {
+  max-width: none;
+  margin: 0;
+}
+
+.contenido .indice a {
+  display: block;
+  padding: 0.35rem 0.75rem;
+  color: var(--texto);
+  font-size: 0.9rem;
+  text-decoration: none;
+  background: var(--tarjetas-oscuras);
+  border-radius: 0.35rem;
+  transition: background 0.2s;
+}
+
+.contenido .indice a:hover,
+.contenido .indice a:focus-visible {
+  background: var(--botones);
+}
+
 
 #inicio
  {
@@ -569,6 +630,11 @@ button.navegacion_calculadoras[aria-pressed="true"] {
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
 }
 
+.barra-inferior.estatica {
+  position: static;
+  width: auto;
+  margin: 2rem auto 0;
+}
 
 .barra-inferior::before {
   content: "";

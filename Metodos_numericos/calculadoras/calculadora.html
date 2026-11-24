@@ -11,6 +11,7 @@
   <script src="teclados-numericos.js" defer></script>
   <link rel="stylesheet" href="../../css/estilos.css">
   <link rel="stylesheet" href="../../css/boton-arriba.css">
+  <link rel="icon" href="../../Imagenes/favicon.ico" sizes="32x32">
 </head>
 <body>
   <header>
@@ -25,8 +26,8 @@
       <a class="navegacion" href="../taylor.html">Taylor</a>
     </nav>
   </header>
-
-  <p class="descripcion">Escribe las funciones usando <code>x</code>, <code>^</code> para potencias y punto para decimales. Puedes usar <code>sen</code>, <code>cos</code>, <code>tan</code>, <code>exp</code>, <code>ln</code>, <code>log</code>, <code>log10</code>, <code>raiz</code>, <code>absoluto</code>, <code>pi</code> y <code>e</code>. También se aceptan <code>sin</code>, <code>sqrt</code> y <code>abs</code>.</p>
+  <main>
+    <p class="descripcion">Escribe las funciones usando <code>x</code>, <code>^</code> para potencias y punto para decimales. Puedes usar <code>sen</code>, <code>cos</code>, <code>tan</code>, <code>exp</code>, <code>ln</code>, <code>log</code>, <code>log10</code>, <code>raiz</code>, <code>absoluto</code>, <code>pi</code> y <code>e</code>. También se aceptan <code>sin</code>, <code>sqrt</code> y <code>abs</code>.</p>
 
   <nav class="selector-calculadoras" aria-label="Elegir calculadora">
     <button class="navegacion_calculadoras" type="button" data-section="biseccion" aria-pressed="true">Bisección</button>
@@ -168,9 +169,21 @@
     </form>
     <div id="resultado-interpolacion-polinomial" class="resultado" aria-live="polite"></div>
   </section>
+    
+  </main>
+
+
+  <footer class="barra-inferior estatica">
+        <div class="footer-biblioteca">
+            ¡LA MEJOR FUCKING BIBLIOTECA DE MÉTODOS NUMÉRICOS!
+        </div>
+    </footer>
 
 
     <button id="btn-arriba" aria-label="Volver arriba">↑</button>
     <script src="/scripts/boton-arriba.js"></script>
+
+  
+
 </body>
 </html>
