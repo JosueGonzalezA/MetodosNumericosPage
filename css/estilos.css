@@ -395,6 +395,16 @@ html {
   background: var(--botones);
 }
 
+.contenido mjx-container[display="true"] {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.contenido :is(p, h2, h3) {
+  overflow-x: auto;
+}
+
 
 #inicio
  {
