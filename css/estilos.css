@@ -94,6 +94,12 @@ button.navegacion_calculadoras[aria-pressed="true"] {
   margin: 1.5rem 0;
 }
 
+.grupo-lagrange {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 1.25rem;
+}
+
 
 img {
   width: 150px;
