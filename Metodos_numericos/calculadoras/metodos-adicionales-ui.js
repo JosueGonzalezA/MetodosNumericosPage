@@ -56,6 +56,19 @@ if (typeof document !== "undefined") {
     contenedor.append(elemento);
   }
 
+  function mostrarErrorInterpolacion(salida, datos) {
+    if (datos.valorReal === null) {
+      texto(salida, "Para calcular el error, escribe el valor real en x.");
+      return;
+    }
+    texto(salida, `Valor real en x: ${numero(datos.valorReal)}.`);
+    texto(salida, `Error real (valor real − aproximación): ${numero(datos.errorReal)}.`);
+    texto(salida, `Error absoluto: ${numero(datos.errorAbsoluto)}.`);
+    texto(salida, datos.errorPorcentual === null
+      ? "Error relativo: no definido cuando el valor real es 0."
+      : `Error relativo: ${numero(datos.errorPorcentual)}%.`);
+  }
+
   function conectar(idFormulario, idResultado, calcular, mostrar) {
     const formulario = document.getElementById(idFormulario);
     const salida = document.getElementById(idResultado);
@@ -209,7 +222,8 @@ if (typeof document !== "undefined") {
     const x0 = leer(formulario, "x0"), y0 = leer(formulario, "y0");
     const x1 = leer(formulario, "x1"), y1 = leer(formulario, "y1");
     const x = leer(formulario, "valor", true);
-    return { ...metodos.resolverLagrangeLineal(x0, y0, x1, y1, x), x0, y0, x1, y1, x };
+    const valorReal = leer(formulario, "real", true);
+    return { ...metodos.resolverLagrangeLineal(x0, y0, x1, y1, x, valorReal), x0, y0, x1, y1, x };
   }, (salida, datos) => {
     tabla(salida, ["Punto", "x", "y"], [["0", numero(datos.x0), numero(datos.y0)], ["1", numero(datos.x1), numero(datos.y1)]]);
     if (datos.x === null) {
@@ -221,6 +235,7 @@ if (typeof document !== "undefined") {
     texto(salida, `L₀(${numero(datos.x)}) = (${numero(datos.x)} − ${numero(datos.x1)}) / (${numero(datos.x0)} − ${numero(datos.x1)}) = ${numero(datos.base0)}.`);
     texto(salida, `L₁(${numero(datos.x)}) = (${numero(datos.x)} − ${numero(datos.x0)}) / (${numero(datos.x1)} − ${numero(datos.x0)}) = ${numero(datos.base1)}.`);
     texto(salida, `P₁(${numero(datos.x)}) = ${numero(datos.y0)} · ${numero(datos.base0)} + ${numero(datos.y1)} · ${numero(datos.base1)} = ${numero(datos.resultado)}.`, "h3");
+    mostrarErrorInterpolacion(salida, datos);
     if (datos.x < Math.min(datos.x0, datos.x1) || datos.x > Math.max(datos.x0, datos.x1)) texto(salida, "El valor de x está fuera del intervalo de los puntos; el resultado es una extrapolación.");
     salida.append(dibujarGrafica([{ x: datos.x0, y: datos.y0 }, { x: datos.x1, y: datos.y1 }], datos.x, datos.resultado,
       valor => datos.y0 + datos.pendiente * (valor - datos.x0)));
@@ -328,7 +343,8 @@ if (typeof document !== "undefined") {
       return { x, y };
     });
     const x = leer(formulario, "valor", true);
-    return { ...metodos.resolverPolinomial(puntos, x), puntos, x };
+    const valorReal = leer(formulario, "real", true);
+    return { ...metodos.resolverPolinomial(puntos, x, valorReal), puntos, x };
   }, (salida, datos) => {
     if (datos.x === null) {
       tabla(salida, ["i", "xᵢ", "yᵢ"], datos.filas.map(fila => [fila.indice, numero(fila.x), numero(fila.y)]));
@@ -347,6 +363,7 @@ if (typeof document !== "undefined") {
     texto(salida, `P${datos.grado}(x) = ${expresionPolinomial(datos.coeficientes)}.`);
     if (datos.x !== null) {
       texto(salida, `P${datos.grado}(${numero(datos.x)}) = ${numero(datos.resultado)}.`, "h3");
+      mostrarErrorInterpolacion(salida, datos);
       const valoresX = datos.puntos.map(punto => punto.x);
       if (datos.x < Math.min(...valoresX) || datos.x > Math.max(...valoresX)) texto(salida, "El valor de x está fuera del intervalo de los puntos; el resultado es una extrapolación.");
     }

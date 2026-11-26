@@ -62,6 +62,7 @@
     <form id="form-punto-fijo" class="formulario">
       <p class="campo campo-ancho"><label for="p-f">f(x)</label> <input id="p-f" name="original" value="2*e^(x^2)-5*x" required></p>
       <div class="teclado" data-teclado="p-f"></div>
+      <p class="campo campo-ancho"><label for="p-g">g(x) del despeje (opcional)</label> <input id="p-g" name="iteracion" data-campo-funcion type="text" placeholder="Ej. raiz3(10*x+5)"></p>
       <p class="campo"><label for="p-x0">Valor inicial (x₀)</label> <input id="p-x0" name="x0" type="text" inputmode="decimal" value="0" required></p>
       <p class="campo"><label for="p-opcion">Forma de g(x)</label> <select id="p-opcion" name="opcion"><option value="auto">Automática</option><option value="1">g₁(x)</option><option value="2">g₂(x)</option><option value="3">g₃(x)</option></select></p>
       <div id="formas-punto-fijo" class="formas" aria-live="polite"></div>
@@ -112,6 +113,7 @@
       <p class="campo"><label for="l-x1">x₁</label> <input id="l-x1" name="x1" type="text" inputmode="decimal" value="1" required></p>
       <p class="campo"><label for="l-y1">y₁</label> <input id="l-y1" name="y1" type="text" inputmode="decimal" value="1" required></p>
       <p class="campo"><label for="l-valor">Valor a estimar (x, opcional)</label> <input id="l-valor" name="valor" type="text" inputmode="decimal" value="0.25"></p>
+      <p class="campo"><label for="l-real">Valor real en x (opcional)</label> <input id="l-real" name="real" type="text" inputmode="decimal"></p>
       <div class="teclado" data-teclado-numerico></div>
       <button type="submit">Calcular Lagrange lineal</button>
     </form>
@@ -149,6 +151,7 @@
         <button id="quitar-punto" type="button">Quitar último punto</button>
       </div>
       <p class="campo"><label for="ip-valor">Valor a estimar (x, opcional)</label> <input id="ip-valor" name="valor" type="text" inputmode="decimal" value="3"></p>
+      <p class="campo"><label for="ip-real">Valor real en x (opcional)</label> <input id="ip-real" name="real" type="text" inputmode="decimal"></p>
       <div class="teclado" data-teclado-numerico></div>
       <button type="submit">Calcular interpolación polinomial</button>
     </form>

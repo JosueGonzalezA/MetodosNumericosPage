@@ -427,7 +427,25 @@ function calcularPuntoFijo(funcionIteracion, valorInicial, errorPermitido, maxim
   if (!Number.isFinite(valorInicial)) throw new Error("El valor inicial debe ser finito.");
   const filas = [];
   const residuoInicial = funcionOriginal ? Math.abs(funcionOriginal(valorInicial)) : null;
+  let derivadaOriginal = null;
+  if (funcionOriginal?.arbol) {
+    try { derivadaOriginal = derivarFuncion(funcionOriginal).evaluar; }
+    catch { derivadaOriginal = null; }
+  }
   if (residuoInicial === 0) return { raiz: valorInicial, filas, terminado: true, explicacion: "El valor inicial es una raíz exacta." };
+  let ceroEsRaiz = false;
+  if (funcionOriginal) {
+    try { ceroEsRaiz = funcionOriginal(0) === 0; }
+    catch { ceroEsRaiz = false; }
+  }
+  let correccionInicial = null;
+  if (derivadaOriginal) {
+    try {
+      const correccion = Math.abs(residuoInicial / derivadaOriginal(valorInicial));
+      if (Number.isFinite(correccion) && correccion > 0) correccionInicial = correccion;
+    } catch { correccionInicial = null; }
+  }
+  const limiteCercaDeCero = Math.max(1, Math.abs(valorInicial)) * errorPermitido / 100;
   let x = valorInicial;
   for (let iteracion = 1; iteracion <= maximoIteraciones; iteracion++) {
     const siguiente = funcionIteracion(x);
@@ -436,12 +454,23 @@ function calcularPuntoFijo(funcionIteracion, valorInicial, errorPermitido, maxim
     const residuo = funcionOriginal ? Math.abs(funcionOriginal(siguiente)) : null;
     if (residuo === 0) return { raiz: siguiente, filas, terminado: true, explicacion: "Se encontró una raíz exacta." };
     const error = siguiente === 0 ? (x === 0 ? 0 : Infinity) : Math.abs((siguiente - x) / siguiente) * 100;
-    const residuoAceptable = !funcionOriginal || residuo <= residuoInicial * Math.min(errorPermitido / 100, 1);
-    const cambioPequeno = Math.abs(siguiente - x) <= Math.max(1, Math.abs(valorInicial)) * errorPermitido / 100;
-    if ((error < errorPermitido || cambioPequeno) && residuoAceptable) {
+    const residuoAceptable = !funcionOriginal || residuo <= residuoInicial * 0.01;
+    const cercaDeCero = Math.abs(siguiente) <= limiteCercaDeCero;
+    const cambioPequenoCercaDeCero = cercaDeCero && Math.abs(siguiente - x) <= limiteCercaDeCero && (!funcionOriginal || ceroEsRaiz);
+    let errorRaizAceptable = true;
+    if (derivadaOriginal) {
+      try {
+        const pendiente = derivadaOriginal(siguiente);
+        const correccion = Math.abs(residuo / pendiente);
+        const limiteCorreccion = cercaDeCero ? limiteCercaDeCero : Math.abs(siguiente) * errorPermitido / 100;
+        const limiteDesdeInicio = correccionInicial === null ? Infinity : 2 * correccionInicial * errorPermitido / 100;
+        errorRaizAceptable = Number.isFinite(correccion) && correccion <= limiteCorreccion && correccion <= limiteDesdeInicio;
+      } catch { errorRaizAceptable = false; }
+    }
+    if ((error < errorPermitido || cambioPequenoCercaDeCero) && residuoAceptable && errorRaizAceptable) {
       return { raiz: siguiente, filas, terminado: true, explicacion: error < errorPermitido
         ? `El error aproximado Ea es ${mostrarNumero(error)}%, menor que ${mostrarNumero(errorPermitido)}%.`
-        : "El cambio entre iteraciones y el valor de f(x) son suficientemente pequeños." };
+        : "La aproximación está cerca de cero y el cambio absoluto y f(x) son pequeños." };
     }
     x = siguiente;
   }
@@ -497,7 +526,7 @@ function calcularPuntoFijoAutomatico(funcionOriginal, valorInicial, errorPermiti
   if (!pruebas.length) throw new Error("Ninguna forma de g(x) pudo iterar. Revisa si hay una raíz real o prueba otro valor inicial.");
   pruebas.sort((primeraPrueba, segundaPrueba) => Number(segundaPrueba.resultado.terminado) - Number(primeraPrueba.resultado.terminado) || primeraPrueba.residuo - segundaPrueba.residuo || primeraPrueba.resultado.filas.length - segundaPrueba.resultado.filas.length);
   const mejor = pruebas[0];
-  return { ...mejor.resultado, nombreForma: mejor.forma.nombre, formaUsada: mejor.forma.texto };
+  return { ...mejor.resultado, nombreForma: mejor.forma.nombre, formaUsada: mejor.forma.texto, residuoFinal: mejor.residuo };
 }
 
 function calcularNewtonRaphson(funcionOriginal, valorInicial, errorPermitido, maximoIteraciones) {
@@ -536,6 +565,11 @@ function mostrarTabla(contenedor, resultado, titulos) {
   const resumen = document.createElement("p");
   resumen.textContent = `${resultado.terminado ? "Resultado" : "Última aproximación"}: ${mostrarNumero(resultado.raiz)}. ${resultado.explicacion}`;
   contenedor.append(resumen);
+  if (resultado.residuoFinal !== undefined) {
+    const comprobacion = document.createElement("p");
+    comprobacion.textContent = `Comprobación |f(x)|: ${mostrarNumero(resultado.residuoFinal)}.`;
+    contenedor.append(comprobacion);
+  }
   if (resultado.formaUsada) {
     const forma = document.createElement("p");
     forma.textContent = `Forma usada: ${resultado.formaUsada}`;
@@ -759,8 +793,14 @@ if (typeof document !== "undefined") {
   document.querySelectorAll("[data-teclado]").forEach(contenedor => {
     const campo = document.getElementById(contenedor.dataset.teclado);
     const formulario = contenedor.closest?.("form") ?? campo.form;
+    const camposFuncion = new Set([campo, ...formulario.querySelectorAll("[data-campo-funcion]")]);
     const posiciones = new WeakMap();
     let campoActivo = campo;
+    let campoRaiz = campo;
+
+    function esFuncion(entrada) {
+      return camposFuncion.has(entrada);
+    }
 
     function esCampo(entrada) {
       return entrada?.tagName === "INPUT" && entrada.type === "text" && entrada.form === formulario;
@@ -797,19 +837,19 @@ if (typeof document !== "undefined") {
 
     function insertar(etiqueta, textoElegido = null) {
       const numerico = /^\d$/.test(etiqueta) || etiqueta === "." || etiqueta === "−" || etiqueta === "Limpiar";
-      const destino = numerico && esCampo(campoActivo) ? campoActivo : campo;
+      const destino = esCampo(campoActivo) && (numerico || esFuncion(campoActivo)) ? campoActivo : campo;
       const [inicio, fin] = seleccion(destino);
       destino.focus();
 
       if (etiqueta === "Limpiar") {
         destino.value = "";
         destino.setSelectionRange(0, 0);
-      } else if (destino !== campo && etiqueta === "−") {
+      } else if (!esFuncion(destino) && etiqueta === "−") {
         const negativo = destino.value.startsWith("-");
         destino.value = negativo ? destino.value.slice(1) : `-${destino.value}`;
         const mover = posicion => Math.max(0, posicion + (negativo ? -1 : 1));
         destino.setSelectionRange(mover(inicio), mover(fin));
-      } else if (destino !== campo && etiqueta === ".") {
+      } else if (!esFuncion(destino) && etiqueta === ".") {
         const restante = destino.value.slice(0, inicio) + destino.value.slice(fin);
         const exponente = restante.search(/[eE]/);
         if (restante.slice(0, exponente < 0 ? undefined : exponente).includes(".") || (exponente >= 0 && inicio > exponente)) {
@@ -837,7 +877,7 @@ if (typeof document !== "undefined") {
 
     campo.setSelectionRange(campo.value.length, campo.value.length);
     contenedor.setAttribute("role", "group");
-    contenedor.setAttribute("aria-label", "Teclado para f(x) y campos numéricos");
+    contenedor.setAttribute("aria-label", "Teclado para funciones y campos numéricos");
     const tabla = document.createElement("table");
     tabla.setAttribute("align", "center");
     const cuerpo = document.createElement("tbody");
@@ -865,9 +905,9 @@ if (typeof document !== "undefined") {
     function cerrarRaiz() {
       panelRaiz.hidden = true;
       aviso.textContent = "";
-      campo.focus();
-      campo.setSelectionRange(...seleccionRaiz);
-      guardarPosicion(campo);
+      campoRaiz.focus();
+      campoRaiz.setSelectionRange(...seleccionRaiz);
+      guardarPosicion(campoRaiz);
     }
 
     function confirmarRaiz() {
@@ -902,7 +942,8 @@ if (typeof document !== "undefined") {
           boton.addEventListener("pointerdown", () => guardarPosicion(campoActivo));
           boton.addEventListener("mousedown", evento => evento.preventDefault());
           boton.addEventListener("click", () => {
-            seleccionRaiz = seleccion(campo);
+            campoRaiz = esFuncion(campoActivo) ? campoActivo : campo;
+            seleccionRaiz = seleccion(campoRaiz);
             aviso.textContent = "";
             panelRaiz.hidden = false;
             campoIndice.focus();
@@ -944,11 +985,21 @@ if (typeof document !== "undefined") {
   actualizarDerivadaNewton();
 
   const campoFuncionPuntoFijo = document.getElementById("p-f");
+  const campoIteracionPuntoFijo = document.getElementById("p-g");
   const campoInicialPuntoFijo = document.getElementById("p-x0");
+  const opcionPuntoFijo = document.getElementById("p-opcion");
   const salidaFormasPuntoFijo = document.getElementById("formas-punto-fijo");
   function actualizarFormasPuntoFijo() {
     salidaFormasPuntoFijo.replaceChildren();
+    opcionPuntoFijo.disabled = Boolean(campoIteracionPuntoFijo.value.trim());
     try {
+      if (opcionPuntoFijo.disabled) {
+        leerFuncion(campoIteracionPuntoFijo.value);
+        const linea = document.createElement("p");
+        linea.textContent = `Se usará g(x)=${campoIteracionPuntoFijo.value.trim()}`;
+        salidaFormasPuntoFijo.append(linea);
+        return;
+      }
       if (!campoInicialPuntoFijo.value.trim()) throw new Error("Escribe un valor inicial.");
       const funcionOriginal = leerFuncion(campoFuncionPuntoFijo.value);
       const valorInicial = leerNumero(document.getElementById("form-punto-fijo"), "x0");
@@ -965,6 +1016,7 @@ if (typeof document !== "undefined") {
     }
   }
   campoFuncionPuntoFijo.addEventListener("input", actualizarFormasPuntoFijo);
+  campoIteracionPuntoFijo.addEventListener("input", actualizarFormasPuntoFijo);
   campoInicialPuntoFijo.addEventListener("input", actualizarFormasPuntoFijo);
   actualizarFormasPuntoFijo();
 
@@ -993,9 +1045,20 @@ if (typeof document !== "undefined") {
 
   prepararFormulario("form-punto-fijo", "resultado-punto-fijo", formulario => {
     const texto = formulario.elements.namedItem("original").value.trim();
+    const funcionOriginal = leerFuncion(texto);
+    const valorInicial = leerNumero(formulario, "x0");
+    const tolerancia = leerNumero(formulario, "tolerancia");
+    const maximo = leerNumero(formulario, "maximo");
+    const textoIteracion = formulario.elements.namedItem("iteracion").value.trim();
+    if (textoIteracion) {
+      const resultado = calcularPuntoFijo(leerFuncion(textoIteracion), valorInicial, tolerancia, maximo, funcionOriginal);
+      return {
+        ...resultado, nombreForma: "g(x)", formaUsada: `g(x)=${textoIteracion}`,
+        residuoFinal: Math.abs(funcionOriginal(resultado.raiz))
+      };
+    }
     return calcularPuntoFijoAutomatico(
-      leerFuncion(texto), leerNumero(formulario, "x0"), leerNumero(formulario, "tolerancia"),
-      leerNumero(formulario, "maximo"), texto, formulario.elements.namedItem("opcion").value
+      funcionOriginal, valorInicial, tolerancia, maximo, texto, formulario.elements.namedItem("opcion").value
     );
   }, [], (contenedor, resultado) => mostrarTabla(contenedor, resultado, ["n", "X", resultado.nombreForma, "f(x)"]));
 

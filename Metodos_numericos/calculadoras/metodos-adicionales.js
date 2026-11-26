@@ -275,13 +275,15 @@ const METODOS_ADICIONALES = (() => {
     return { punto, valorExacto, filas };
   }
 
-  function resolverLagrangeLineal(x0, y0, x1, y1, x) {
+  function resolverLagrangeLineal(x0, y0, x1, y1, x, valorReal = null) {
     revisarDosPuntos(x0, y0, x1, y1);
+    if (valorReal !== null) numeroFinito(valorReal, "El valor real");
+    if (x === null && valorReal !== null) throw new Error("Escribe el valor de x para comparar con el valor real.");
     const pendiente = resultadoFinito((y1 - y0) / (x1 - x0));
     if (x === null) {
       return {
         base0: null, base1: null, termino0: null, termino1: null,
-        resultado: null, pendiente
+        resultado: null, pendiente, valorReal: null, errorReal: null, errorAbsoluto: null, errorPorcentual: null
       };
     }
     numeroFinito(x, "x");
@@ -290,7 +292,8 @@ const METODOS_ADICIONALES = (() => {
     const termino0 = resultadoFinito(y0 * base0);
     const termino1 = resultadoFinito(y1 * base1);
     const resultado = resultadoFinito(termino0 + termino1);
-    return { base0, base1, termino0, termino1, resultado, pendiente };
+    const errorReal = valorReal === null ? null : resultadoFinito(valorReal - resultado);
+    return { base0, base1, termino0, termino1, resultado, pendiente, valorReal, errorReal, ...calcularError(resultado, valorReal) };
   }
 
   function resolverSimpson(textoFuncion, a, b, n, valorExacto = null) {
@@ -385,11 +388,13 @@ const METODOS_ADICIONALES = (() => {
     return { pendiente, interseccion, resultadoY, resultadoX, errorInverso };
   }
 
-  function resolverPolinomial(puntos, x) {
+  function resolverPolinomial(puntos, x, valorReal = null) {
     if (!Array.isArray(puntos) || puntos.length < 2 || puntos.length > 12) {
       throw new Error("Escribe entre 2 y 12 puntos.");
     }
     if (x !== null) numeroFinito(x, "x");
+    if (valorReal !== null) numeroFinito(valorReal, "El valor real");
+    if (x === null && valorReal !== null) throw new Error("Escribe el valor de x para comparar con el valor real.");
     puntos.forEach((punto, indice) => {
       if (!punto || typeof punto !== "object") throw new Error(`El punto ${indice + 1} no es válido.`);
       numeroFinito(punto.x, `x del punto ${indice + 1}`);
@@ -437,7 +442,8 @@ const METODOS_ADICIONALES = (() => {
         coeficientes[indice] = 0;
       }
     });
-    return { grado, filas, coeficientes, resultado };
+    const errorReal = valorReal === null ? null : resultadoFinito(valorReal - resultado);
+    return { grado, filas, coeficientes, resultado, valorReal, errorReal, ...calcularError(resultado, valorReal) };
   }
 
   return {
