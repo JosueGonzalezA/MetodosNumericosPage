@@ -34,10 +34,11 @@
     <button class="navegacion_calculadoras" type="button" data-section="punto-fijo" aria-pressed="false">Punto fijo</button>
     <button class="navegacion_calculadoras" type="button" data-section="newton" aria-pressed="false">Newton-Raphson</button>
     <button class="navegacion_calculadoras" type="button" data-section="taylor" aria-pressed="false">Serie de Taylor</button>
-    <button class="navegacion_calculadoras" type="button" data-section="lagrange-lineal" aria-pressed="false">Lagrange lineal</button>
     <button class="navegacion_calculadoras" type="button" data-section="simpson" aria-pressed="false">Simpson 1/3</button>
-    <button class="navegacion_calculadoras" type="button" data-section="interpolacion-lineal" aria-pressed="false">Interpolación lineal</button>
-    <button class="navegacion_calculadoras" type="button" data-section="interpolacion-polinomial" aria-pressed="false">Interpolación polinomial</button>
+    <span class="grupo-lagrange">
+      <button class="navegacion_calculadoras" type="button" data-section="lagrange-lineal" aria-pressed="false">Lagrange lineal</button>
+      <button class="navegacion_calculadoras" type="button" data-section="interpolacion-polinomial" aria-pressed="false">Lagrange polinomial</button>
+    </span>
   </nav>
 
   <section id="biseccion" class="calculadora" aria-labelledby="titulo-biseccion">
@@ -131,22 +132,6 @@
       <button type="submit">Calcular Simpson 1/3</button>
     </form>
     <div id="resultado-simpson" class="resultado" aria-live="polite"></div>
-  </section>
-
-  <section id="interpolacion-lineal" class="calculadora" aria-labelledby="titulo-interpolacion-lineal" hidden>
-    <h2 id="titulo-interpolacion-lineal" tabindex="-1">Interpolación lineal</h2>
-    <p class="descripcion">Con dos puntos, estima <code>y</code> a partir de <code>x</code>, o <code>x</code> a partir de <code>y</code>, usando la recta que los une.</p>
-    <form id="form-interpolacion-lineal" class="formulario">
-      <p class="campo"><label for="i-x0">x₀</label> <input id="i-x0" name="x0" type="text" inputmode="decimal" value="100" required></p>
-      <p class="campo"><label for="i-y0">y₀</label> <input id="i-y0" name="y0" type="text" inputmode="decimal" value="8.5" required></p>
-      <p class="campo"><label for="i-x1">x₁</label> <input id="i-x1" name="x1" type="text" inputmode="decimal" value="250" required></p>
-      <p class="campo"><label for="i-y1">y₁</label> <input id="i-y1" name="y1" type="text" inputmode="decimal" value="29.8" required></p>
-      <p class="campo"><label for="i-x">Valor de x (opcional)</label> <input id="i-x" name="x" type="text" inputmode="decimal" value="180"></p>
-      <p class="campo"><label for="i-y">Valor de y (opcional)</label> <input id="i-y" name="y" type="text" inputmode="decimal" value="20"></p>
-      <div class="teclado" data-teclado-numerico></div>
-      <button type="submit">Calcular interpolación lineal</button>
-    </form>
-    <div id="resultado-interpolacion-lineal" class="resultado" aria-live="polite"></div>
   </section>
 
   <section id="interpolacion-polinomial" class="calculadora" aria-labelledby="titulo-interpolacion-polinomial" hidden>

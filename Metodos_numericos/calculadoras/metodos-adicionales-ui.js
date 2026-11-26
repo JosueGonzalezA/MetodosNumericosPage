@@ -277,33 +277,6 @@ if (typeof document !== "undefined") {
     }
   });
 
-  conectar("form-interpolacion-lineal", "resultado-interpolacion-lineal", formulario => {
-    const x0 = leer(formulario, "x0"), y0 = leer(formulario, "y0");
-    const x1 = leer(formulario, "x1"), y1 = leer(formulario, "y1");
-    const x = leer(formulario, "x", true), y = leer(formulario, "y", true);
-    if (x === null && y === null) throw new Error("Escribe un valor de x o de y para estimar.");
-    return { ...metodos.resolverInterpolacionLineal(x0, y0, x1, y1, x, y), x0, y0, x1, y1, x, y };
-  }, (salida, datos) => {
-    tabla(salida, ["Punto", "x", "y"], [["0", numero(datos.x0), numero(datos.y0)], ["1", numero(datos.x1), numero(datos.y1)]]);
-    texto(salida, `Pendiente = (y₁ − y₀) / (x₁ − x₀) = (${numero(datos.y1)} − ${numero(datos.y0)}) / (${numero(datos.x1)} − ${numero(datos.x0)}) = ${numero(datos.pendiente)}.`);
-    texto(salida, `P(x) = ${numero(datos.y0)} + ${numero(datos.pendiente)}(x − ${numero(datos.x0)}).`);
-    if (datos.x !== null) texto(salida, `P(${numero(datos.x)}) = ${numero(datos.resultadoY)}.`, "h3");
-    if (datos.y !== null) {
-      if (datos.errorInverso) texto(salida, datos.errorInverso);
-      else texto(salida, `Para y = ${numero(datos.y)}: x = ${numero(datos.x0)} + (${numero(datos.y)} − ${numero(datos.y0)}) / ${numero(datos.pendiente)} = ${numero(datos.resultadoX)}.`, "h3");
-    }
-    const minimo = Math.min(datos.x0, datos.x1);
-    const maximo = Math.max(datos.x0, datos.x1);
-    if ((datos.x !== null && (datos.x < minimo || datos.x > maximo)) ||
-        (datos.resultadoX !== null && (datos.resultadoX < minimo || datos.resultadoX > maximo))) {
-      texto(salida, "Uno de los valores estimados está fuera del intervalo de los puntos; ese resultado es una extrapolación.");
-    }
-    const xMarcado = datos.x !== null ? datos.x : datos.resultadoX;
-    const yMarcado = datos.x !== null ? datos.resultadoY : datos.y;
-    salida.append(dibujarGrafica([{ x: datos.x0, y: datos.y0 }, { x: datos.x1, y: datos.y1 }], xMarcado, yMarcado,
-      valor => datos.y0 + datos.pendiente * (valor - datos.x0)));
-  });
-
   const contenedorPuntos = document.getElementById("puntos-polinomiales");
   function renumerarPuntos() {
     contenedorPuntos.querySelectorAll("[data-punto]").forEach((fila, indice) => {
